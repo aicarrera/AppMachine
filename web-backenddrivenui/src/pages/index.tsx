@@ -5,23 +5,30 @@ import { GiVendingMachine } from "react-icons/gi";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import * as constants from "../config/constants";
+import { Login } from '../config/interfaces';
 
-
+async function login(username: String): Promise<Login> {
+  try {
+    const res = await fetch(constants._API_URL + 'getUser?username=' + username, {
+      method: 'GET',
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"       
+      }
+    });
+    return await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 const Index = () =>{ 
   const [username, setUserInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
-  const handleLogin = async () => {
-    try{
-    const res= await fetch(constants._API_URL+'getUser?username='+username,
-    {method:'GET',   
-    headers:{"Accept": "application/json",
-    "Content-Type": "application/json",    },
-    }
-    );
-    const jsonResponse = await res.json();
+  const handleLogin =  async () => {  
+    const jsonResponse = await login(username);
     if(!jsonResponse){
       setUserInput("");
     }
@@ -33,18 +40,13 @@ const Index = () =>{
         query: { userid, role }
       });
       setIsLoading(true);
-    }
-  } catch(error){
-  console.log(error);
-  }
-
-  
+    }    
   };
 
   return (
   
     <Flex h="100vh" w= "full" py={20} justifyContent="center">
-    <VStack w="40%" h="min-content" p={10} alignItems="center"  spacing={'24px'} borderWidth="1px" borderColor="gray.300" borderRadius="md">
+    <VStack w="70%" h="min-content" p={10} alignItems="center"  spacing={'24px'} borderWidth="1px" borderColor="gray.300" borderRadius="md">
     <Heading as='h4' size='md' >
       Coffee Machine <Icon as={GiVendingMachine} />
     </Heading>
