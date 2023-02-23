@@ -7,8 +7,9 @@ interface ICard {
   data: ICardData
 }
 interface ICardData {
+  id: String!
   title: String!
-  linkUrl: String!
+
 }
 type GridItem {
   thumbnailUrl: String!
@@ -16,10 +17,11 @@ type GridItem {
 }
 
 type BasicCardData implements ICardData{
+  id: String!
   title: String!
   thumbnailUrl: String!
-  textLink: String!
-  linkUrl: String!
+ 
+
 }
 
 type BasicCard implements ICard{
@@ -28,6 +30,7 @@ type BasicCard implements ICard{
 }
 
 type GridCardData implements ICardData{
+  id: String!
   title: String!
   grid: [GridItem]!
   textLink: String!
@@ -40,6 +43,7 @@ type GridCard implements ICard{
 }
 
 type ActionCardData implements ICardData{
+  id: String!
   title: String!
   textLink: String!
   linkUrl: String!
@@ -49,24 +53,13 @@ type ActionCard implements ICard{
   component: String!
   data: ActionCardData
 }
-
-type AdvertisementCardData implements ICardData{
-  title: String!
-  thumbnailUrl: String!
-  linkUrl: String!
+input ContextFilter{
+  name:String
+  value:String
+}
+type Query { 
+  recommendedForYouItems(userid:String, topk:Int, contextFilter:[ContextFilter]): [ICard!]!
 }
 
-type AdvertisementCard implements ICard{
-  component: String!
-  data: AdvertisementCardData
-}
-
-#union Card = BasicCard | GridCard | ActionCard | AdvertisementCard
-
-type Query {
-  featuredItems: [ICard!]!
-  discountedItems: [ICard!]!
-  recommendedForYouItems: [ICard!]!
-}
 `;
 //# sourceMappingURL=types.js.map

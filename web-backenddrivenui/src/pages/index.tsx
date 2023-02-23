@@ -1,5 +1,5 @@
 
-import { Button, Flex,  Heading, Icon, Spinner, VStack } from '@chakra-ui/react';
+import { Button, Flex,  Heading, Icon, Link, Spinner, VStack } from '@chakra-ui/react';
 import InputField from "../components/Inputs/InputField";
 import { GiVendingMachine } from "react-icons/gi";
 import { useRouter } from "next/router";
@@ -63,7 +63,11 @@ const Index = () =>{
           zIndex={1}
         />
       )}
+    <Link color='teal.500' href='/registerusr'>
+    Register
+    </Link>
     </VStack>
+   
     </Flex>
   
       

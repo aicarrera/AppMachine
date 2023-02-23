@@ -1,4 +1,4 @@
-import {calculateRatings, getSubservicesRecommendationCD, Subservice } from './ontologyAPI';
+import {calculateRatings, getSubservicesRecommendation, Subservice } from './ontologyAPI';
 
 function getBasicCard(s:Subservice) {
     return {
@@ -19,7 +19,7 @@ function getBasicCard(s:Subservice) {
    console.log(args.topk);
    console.log(args.contextFilter);
    await calculateRatings(args.contextFilter);
-   return (await getSubservicesRecommendationCD(args.userid, args.topk)).map(x=>getBasicCard(x));  
+   return (await getSubservicesRecommendation(args.userid, args.topk, args.on)).map(x=>getBasicCard(x));  
   }
   
   export default {

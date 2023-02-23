@@ -58,7 +58,7 @@ input ContextFilter{
   value:String
 }
 type Query { 
-  recommendedForYouItems(userid:String, topk:Int, contextFilter:[ContextFilter]): [ICard!]!
+  recommendedForYouItems(userid:String, topk:Int, contextFilter:[ContextFilter], on:Boolean): [ICard!]!
 }
 
 `

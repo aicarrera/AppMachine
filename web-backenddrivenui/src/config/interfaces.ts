@@ -17,6 +17,8 @@ export interface Service{
   information:Information[]
 }
 export interface Login{
-  id: string
-  role:string
+  id: string;
+ 
+  role:string;
 }
+

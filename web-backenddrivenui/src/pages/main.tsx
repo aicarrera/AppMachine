@@ -29,8 +29,8 @@ const client = new ApolloClient({
 });
 
 const getRecommended = gql`
- query Recommended($userid:String, $topk:Int, $contextFilter:[ContextFilter]){
-  recommendedForYouItems(userid:$userid, topk: $topk, contextFilter:$contextFilter) {
+ query Recommended($userid:String, $topk:Int, $contextFilter:[ContextFilter], $on:Boolean){
+  recommendedForYouItems(userid:$userid, topk: $topk, contextFilter:$contextFilter, on:$on) {
     component
 ... on BasicCard {  
       data {
@@ -54,16 +54,19 @@ export async function getServerSideProps(context) {
       value:role
     }
   ]
-  console.log(userid,role)
-  console.log(contextFilter)
-  const { loading, error, data } = await client.query({query:getRecommended, variables:{userid:userid, topk:15, contextFilter:contextFilter}});
-  console.log(data)
+  //console.log(userid,role)
+  //console.log(contextFilter)
+  
+  const { loading, error, data } = await client.query({query:getRecommended, variables:{userid:userid, topk:15, contextFilter:contextFilter, on:true}});
   if (loading) console.log("loading")
   if (error) console.log(JSON.stringify(error, null, 2));
 
 
-  const firstRecommended = data.recommendedForYouItems[0];
-  var restSugar=  await getSugar(firstRecommended.data.title);
+  
+  const randomIndex =  5 + Math.floor(Math.random() * (data.recommendedForYouItems.length - 5)); 
+  const serendipity = [data.recommendedForYouItems[randomIndex]];
+  const firstRecommended = [...data.recommendedForYouItems.slice(0,2),...serendipity];
+  var restSugar=  await getSugar(firstRecommended[0].data.title);
   const sugarFirstRecommended= restSugar.valueInt;
  
   return {

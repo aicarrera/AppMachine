@@ -35,9 +35,9 @@ async function calculateRatings(cf:JSON[]){
    * @param userid 
    * @returns 
    */
-  async function getSubservicesRecommendationCD(userid:String, topk:Number): Promise<Subservice[]> {
+  async function getSubservicesRecommendation(userid:String, topk:Number, on:Boolean): Promise<Subservice[]> {
     try {
-      return await fetch(_API_URL+'getSubserviceRecommendationCosineDist?userid='+userid+"&topk="+topk,
+      return await fetch(_API_URL+'getServiceRecommendations?userid='+userid+"&on="+on+"&topk="+topk,
       {method:'GET',
       headers:{"Accept": "application/json",
       "Content-Type": "application/json",
@@ -50,6 +50,7 @@ async function calculateRatings(cf:JSON[]){
     }
   
   }
+  
 
 
   async function getNextElement(cf:JSON[], elementUI:String){
@@ -70,4 +71,4 @@ async function calculateRatings(cf:JSON[]){
   }
 
   
-  export {Subservice, calculateRatings, getSubservicesRecommendationCD, getNextElement};
+  export {Subservice, calculateRatings, getSubservicesRecommendation, getNextElement};

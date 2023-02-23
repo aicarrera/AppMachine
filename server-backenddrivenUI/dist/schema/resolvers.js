@@ -8,52 +8,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const node_fetch_1 = __importDefault(require("node-fetch"));
-const _GRAPHDBSERVER = "http://localhost:7200/";
-function getSubservicesRecommendationCD() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            return yield (0, node_fetch_1.default)('http://localhost:8080/APIContextInteraction/api/headers/getSubserviceRecommendationCosineDist?userid=FmxgvxmU', { method: 'GET',
-                headers: { "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    "GRAPHDB_SERVER": _GRAPHDBSERVER } })
-                .then((response) => response.json())
-                .then((data) => data);
-        }
-        catch (error) {
-            console.log(error);
-            return error;
-        }
-    });
-}
-function getBasicCard() {
+const ontologyAPI_1 = require("./ontologyAPI");
+function getBasicCard(s) {
     return {
         component: 'BasicCard',
         data: {
-            title: 'Titulo',
-            thumbnailUrl: 'https://via.placeholder.com/150',
-            textLink: 'ver mas',
+            id: s.id,
+            title: s.name,
+            thumbnailUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/52/Deus_Coffee.png',
+            textLink: '...',
             linkUrl: 'http://example.com/link',
         },
     };
 }
-function featuredItems() {
-    return [
-        getBasicCard(),
-        getBasicCard(),
-        getBasicCard(),
-    ];
-}
-function recommendedForYouItems() {
+function recommendedForYouItems(_, args) {
     return __awaiter(this, void 0, void 0, function* () {
-        (yield getSubservicesRecommendationCD()).forEach(element => {
-            console.log(element);
-        });
-        return [getBasicCard(), getBasicCard(), getBasicCard(), getBasicCard()];
+        console.log(args.userid);
+        console.log(args.topk);
+        console.log(args.contextFilter);
+        yield (0, ontologyAPI_1.calculateRatings)(args.contextFilter);
+        return (yield (0, ontologyAPI_1.getSubservicesRecommendation)(args.userid, args.topk)).map(x => getBasicCard(x));
     });
 }
 exports.default = {
@@ -63,8 +38,7 @@ exports.default = {
         },
     },
     Query: {
-        featuredItems,
-        recommendedForYouItems,
+        recommendedForYouItems
     },
 };
 //# sourceMappingURL=resolvers.js.map
