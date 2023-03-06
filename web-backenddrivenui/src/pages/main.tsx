@@ -66,8 +66,8 @@ export async function getServerSideProps(context) {
   const randomIndex =  5 + Math.floor(Math.random() * (data.recommendedForYouItems.length - 5)); 
   const serendipity = [data.recommendedForYouItems[randomIndex]];
   const firstRecommended = [...data.recommendedForYouItems.slice(0,2),...serendipity];
-  var restSugar=  await getSugar(firstRecommended[0].data.title);
-  const sugarFirstRecommended= restSugar.valueInt;
+// var restSugar=  await getSugar(firstRecommended[0].data.title);
+//  const sugarFirstRecommended= restSugar.valueInt;
  
   return {
     props: {
@@ -75,47 +75,18 @@ export async function getServerSideProps(context) {
       userid:userid,  
       role:role,    
       contextFilter:contextFilter,
-      firstRecommended:firstRecommended,
-      sugarFirstRecommended:sugarFirstRecommended
+      firstRecommended:firstRecommended
+    //  sugarFirstRecommended:sugarFirstRecommended
     },
  };
 
 }
 
-
-/**
- * TMP
- * @param r 
- * @returns 
- */
-async function getSugar(service:String){
-  try{
-  
-    const res= await fetch(constants._API_URL+'getSugar?service='+service,
-    {method:'GET',   
-    headers:{"Accept": "application/json",
-    "Content-Type": "application/json",
-    "GRAPHDB_SERVER":constants._GRAPHDBSERVER},
-    });
-    console.log(res);
-    return await res.json();
-  }
-  catch(error){
-    console.log("getSugar()");
-    console.log(error);
-    return error
-  }
-}
-
-
-
-
-
-const Main = ({recommended, userid, role, contextFilter,sugarFirstRecommended,firstRecommended}) => {
+const Main = ({recommended, userid, role, contextFilter,firstRecommended}) => {
            
             //Google Analytics 
             ReactGA.initialize([{trackingId:'G-E845X2ZQS1', gaOptions:{userId:userid}}]);
-            ReactGA.send({ hitType: "pageview", page: "/main" });
+            ReactGA.send({ hitType: "pageview", page: "/main" , value: JSON.stringify(contextFilter)});
 
             
             /*Matomo configuration   (TESTING GA4)                  
@@ -128,7 +99,7 @@ const Main = ({recommended, userid, role, contextFilter,sugarFirstRecommended,fi
             */
 
             //Turn calculation depending on hour
-            var turn = useTimeLabel();            
+            var shift = useTimeLabel();            
             //Selected service for the user
             const [serviceSelected, setServiceSelected] = useState<Service>({ service: "", information: [] });;
             //Current active tab
@@ -150,7 +121,7 @@ const Main = ({recommended, userid, role, contextFilter,sugarFirstRecommended,fi
               </Heading>
               <Text as='i'>Welcome {userid}!</Text>
               <Text as='i'>Role {role}!</Text>
-              <Text as='i'>Turn {turn}</Text>  
+              <Text as='i'>Shift {shift}</Text>  
             </VStack>
             <Tabs index={activeTab} minWidth={"full"} variant='soft-rounded' colorScheme='blue' size={"lg"} isFitted onChange={handleTabsChange}>
               <TabList >
@@ -160,7 +131,7 @@ const Main = ({recommended, userid, role, contextFilter,sugarFirstRecommended,fi
               </TabList>
               <TabPanels>
                 <TabPanel>
-                    <Recommended setServiceSelected={setServiceSelected} firstRecommended={firstRecommended} sugarFirstRecommended={sugarFirstRecommended} setActiveTab={setActiveTab}/> 
+                    <Recommended setServiceSelected={setServiceSelected} firstRecommended={firstRecommended}  setActiveTab={setActiveTab}/> 
                 </TabPanel>
                 <TabPanel>
                     <Preparation recommended={recommended} contextFilter={contextFilter} setServiceSelected={setServiceSelected} setActiveTab={setActiveTab} />

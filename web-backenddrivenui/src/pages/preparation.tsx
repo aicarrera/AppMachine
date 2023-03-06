@@ -1,5 +1,5 @@
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Heading, HStack, Icon, SimpleGrid, Text, VStack } from "@chakra-ui/react";
-import NumberInput from "../components/Inputs/NumberInput";
+import NumberInput from "../components/Inputs/NumberInputPrep";
 import YesNo from "../components/YesNo";
 import { SiCoffeescript } from 'react-icons/si'
 import { HiCube } from 'react-icons/hi'
@@ -43,7 +43,7 @@ async function getNextElement(r:RequestNextStep){
 
 const Preparation = ({recommended,contextFilter, setServiceSelected, setActiveTab}) => {
   const [servicepreparation, setServicePreparation] = useState<Service>({service:"", information:[{parameter: "sugar", value:"-"},{parameter: "cup", value:"Yes"}]});;
-  
+
   async function handleTriggerClick(cf:ContextFilter[],historyElementUI:String[],elementId:string) {  
     //var data= await getNextElement({contextList:cf,elementUI:historyElementUI});
     //var button1 = document.getElementById(data.element);
@@ -67,13 +67,10 @@ const handleUpdateLocation = (parameter: string, information: Information) => {
   setServicePreparation({...servicepreparation, information: updatedLocations});
 }
 
-  const handleChange = ( valueInput: string) => {
-    console.log("sugar",valueInput);
+  const handleChange = ( valueInput: number) => {   
    useEffect(() => { 
-      handleUpdateLocation("sugar",{parameter:"sugar", value:valueInput})
-
-   },[valueInput])
- 
+      handleUpdateLocation("sugar",{parameter:"sugar", value:valueInput.toString()})
+   },[valueInput]); 
   }
   const handlePreparation = ()=>{    
     setServiceSelected(servicepreparation);

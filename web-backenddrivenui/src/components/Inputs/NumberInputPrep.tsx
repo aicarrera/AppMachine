@@ -1,13 +1,10 @@
 import { Button, FormLabel, HStack, Input, useToast  } from "@chakra-ui/react"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { trackevent } from "../../functions/useTrackersGA4";
 
 function NumberInput({label, idIncrement, idDecrease, onChange, defaultValue}) {
   const toast = useToast();
   const [value, setValue] = useState(defaultValue);
-  useEffect(() => {
-    setValue(defaultValue);
-  }, [defaultValue]);
   const handleIncrementDecrement = (e,operation:string,valueOperation) => {
     if ((operation==="increment" && value < 3)||(operation==="decrement"&&value > 0)) {
       toast({      
@@ -16,9 +13,8 @@ function NumberInput({label, idIncrement, idDecrease, onChange, defaultValue}) {
         duration: 3000,
         isClosable: true,
       })
-      onChange(value + valueOperation);
       setValue(value + valueOperation);
-
+      
     }
     trackevent(e.target.id,"preparation","");   
   };
@@ -28,7 +24,7 @@ function NumberInput({label, idIncrement, idDecrease, onChange, defaultValue}) {
     <HStack maxW='320px'>
       <FormLabel>{label}</FormLabel>
       <Button id= {idIncrement} onClick={e=>{handleIncrementDecrement(e,"increment",1)}}>+</Button>
-      <Input value={value} htmlSize={4} width='auto' readOnly />
+      <Input value={value} htmlSize={4} width='auto' readOnly onChange={onChange(value)}/>
       <Button id= {idDecrease} onClick={e=>handleIncrementDecrement(e,"decrement",-1)}>-</Button>
     </HStack>
   )
