@@ -63,11 +63,19 @@ import * as constants from "../../config/constants";
    //trackEvent({ category: 'button', action: 'click-event'});  //matomo
   }
 
-  function handleRating(e, id, title, parameter, interactionValue){
-    setButtonState(interactionValue);
-    trackevent(e.target.id,"recommended",JSON.stringify({service:title, information: [{parameter:"sugar", value:parameter}]}),interactionValue); 
+  async function handleRating(e, id, title, parameter, interactionValue){
+    trackevent(e.currentTarget.id,"recommended",JSON.stringify({service:title, information: [{parameter:"sugar", value:parameter}]}),interactionValue); 
+    toast({      
+      description: "Thanks for rating "+title,
+      status: 'success',
+      duration: 1500,
+      isClosable: true,
+    });
+    //changeColorButton(interactionValue)
   }
-  
+  /*function changeColorButton(interactionValue){
+    setButtonState(interactionValue);
+  }*/
    function handleChangeInput(value: number) {
     setValue(value);
   }

@@ -2,7 +2,7 @@ import { Button, FormLabel, HStack, Input, useToast  } from "@chakra-ui/react"
 import { useState } from "react";
 import { trackevent } from "../../functions/useTrackersGA4";
 
-function NumberInput({label, idIncrement, idDecrease, onChange, defaultValue}) {
+function NumberInputPrep({label, idIncrement, idDecrease, onChange, defaultValue}) {
   const toast = useToast();
   const [value, setValue] = useState(defaultValue);
   const handleIncrementDecrement = (e,operation:string,valueOperation) => {
@@ -30,4 +30,4 @@ function NumberInput({label, idIncrement, idDecrease, onChange, defaultValue}) {
   )
 
 }
-export default NumberInput;
+export default NumberInputPrep;
