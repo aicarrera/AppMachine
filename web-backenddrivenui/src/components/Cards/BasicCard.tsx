@@ -54,10 +54,10 @@ import * as constants from "../../config/constants";
    if (acceptRecommendation){  
       const updatedService = { service:title, information: [{parameter:"sugar", value:value}] }  
       setServiceSelected(updatedService)
-      trackevent(e.target.id,"recommended",JSON.stringify(updatedService),1);    
+      trackevent(e.currentTarget.id,"recommended",JSON.stringify(updatedService),1);    
    }
    else{
-      trackevent(e.target.id,"recommended",JSON.stringify({service:title, information: [{parameter:"sugar", value:value}]}),0);         
+      trackevent(e.currentTarget.id,"recommended",JSON.stringify({service:title, information: [{parameter:"sugar", value:value}]}),0);         
    }
    setActiveTab(index); 
    //trackEvent({ category: 'button', action: 'click-event'});  //matomo

@@ -19,7 +19,7 @@ import Buy from "./buy";
 
 import ReactGA from 'react-ga4';
 import { trackevent } from "../functions/useTrackersGA4";
-
+import { getDayOfWeek } from "../functions/getDayOfWeek";
 
 
 
@@ -41,9 +41,13 @@ const getRecommended = gql`
 }}}
 `;
 export async function getServerSideProps(context) {
+ const services=["cortado","long_coffee","capuccino","expresso", "milk_coffee"]
+ const i = Math.floor(Math.random() * services.length);
+  var out = services[i]
   var userid = context.query.userid;
   var role = context.query.role;
   const turn = useTimeLabel(); 
+  const dayweek=getDayOfWeek();
   const contextFilter=[
     {
       name:"turn",
@@ -52,10 +56,18 @@ export async function getServerSideProps(context) {
     {
       name:"role",
       value:role
+    },
+    {
+      name:"dayofweek",
+      value: dayweek.toString()
+    },
+    {
+      name:"out",
+      value: out
     }
   ]
   //console.log(userid,role)
-  //console.log(contextFilter)
+  console.log(contextFilter)
   
   const { loading, error, data } = await client.query({query:getRecommended, variables:{userid:userid, topk:15, contextFilter:contextFilter, on:true}});
   if (loading) console.log("loading")
@@ -107,8 +119,7 @@ const Main = ({recommended, userid, role, contextFilter,firstRecommended}) => {
             const tabIds=["recommended_for_you","preparation","buy"]
             const handleTabsChange = (index) => {
               //trackEvent({ category: 'tab-change', action: 'click-event', value:index});  //Matomo tracking            
-              trackevent("tab"+tabIds[index],"main",tabIds[index],index);    
-
+              trackevent("tab"+tabIds[index],"main",tabIds[index],index);  
               setActiveTab(index); 
             }
 
@@ -122,6 +133,8 @@ const Main = ({recommended, userid, role, contextFilter,firstRecommended}) => {
               <Text as='i'>Welcome {userid}!</Text>
               <Text as='i'>Role {role}!</Text>
               <Text as='i'>Shift {shift}</Text>  
+              <Text as='i'>DayofWeek {getDayOfWeek()}</Text>  
+
             </VStack>
             <Tabs index={activeTab} minWidth={"full"} variant='soft-rounded' colorScheme='blue' size={"lg"} isFitted onChange={handleTabsChange}>
               <TabList >
