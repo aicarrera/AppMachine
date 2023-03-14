@@ -101,7 +101,7 @@ const Main = ({recommended, userid, role, contextFilter,firstRecommended}) => {
             //Google Analytics 
             ReactGA.initialize([{trackingId:'G-WSVTBCPP4D', gaOptions:{userId:userid}}]);
             ReactGA.send({ hitType: "pageview", page: "/main" , value: JSON.stringify(contextFilter)});
-
+            
             
             /*Matomo configuration   (TESTING GA4)                  
             //const { trackPageView, trackEvent, pushInstruction  } = useMatomo()

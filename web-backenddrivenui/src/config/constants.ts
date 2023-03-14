@@ -24,7 +24,8 @@ export const ab_Testing={
 "oescallada":true,
 "ibarrutia":false,
 "jjperalta":true,
-"flarrinaga":false
+"flarrinaga":false,
+"xvalencia":true
 }
 export const Cards = {
     BasicCard
