@@ -92,7 +92,7 @@ import * as constants from "../../config/constants";
 
   }
     return (  
-      <VStack spacing={'5px'}>     
+      <VStack spacing={'5px'} paddingBottom={"15px"}>     
       <Card align={"center"} variant="elevated" >    
       <CardBody id={id} >
       <Stack mt='6' spacing='1' alignItems={"center"}> 

@@ -129,16 +129,15 @@ const Main = ({recommended, userid, role, contextFilter,firstRecommended}) => {
           
             <VStack w="full" h="min-content" p={10} alignItems="center"  spacing={'2px'} >    
               <VStack w="full" p={5} alignItems="center"  spacing={'2px'}>
-              <Heading as='h4' size='md'>
-                  Coffee Machine <Icon as={GiVendingMachine} />
-              </Heading>
-              <Text as='i'>Welcome {userid}!</Text>
-              <Text as='i'>Role {role}!</Text>
-              <Text as='i'>Shift {shift}</Text>  
-              <Text as='i'>DayofWeek {getDayOfWeek()}</Text>  
-
-            </VStack>
-            <Tabs index={activeTab} minWidth={"full"} variant='soft-rounded' colorScheme='blue' size={"lg"} isFitted onChange={handleTabsChange}>
+                <Heading as='h4' size='md'>
+                    Coffee Machine <Icon as={GiVendingMachine} />
+                </Heading>
+                <Text as='i'>Welcome {userid}!</Text>
+                <Text as='i'>Role {role}!</Text>
+                <Text as='i'>Shift {shift}</Text>  
+                <Text as='i'>DayofWeek {getDayOfWeek()}</Text> 
+              </VStack>
+            <Tabs index={activeTab} minWidth={"full"} variant='soft-rounded' colorScheme='blue' size={"lg"} isFitted onChange={handleTabsChange} display={"block"} width={"100%"}>
               <TabList >
                 <Tab >Recomended for you</Tab>
                 <Tab >Prepare your beverage</Tab>
