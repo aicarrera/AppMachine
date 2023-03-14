@@ -127,7 +127,7 @@ const Main = ({recommended, userid, role, contextFilter,firstRecommended}) => {
 
             return (
           
-            <VStack w="full" h="min-content" p={10} alignItems="center"  spacing={'2px'} >    
+            <VStack w="full" h="min-content" p={2} alignItems="center"  spacing={'2px'} >    
               <VStack w="full" p={5} alignItems="center"  spacing={'2px'}>
                 <Heading as='h4' size='md'>
                     Coffee Machine <Icon as={GiVendingMachine} />
