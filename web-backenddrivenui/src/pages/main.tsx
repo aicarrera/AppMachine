@@ -46,6 +46,8 @@ export async function getServerSideProps(context) {
   var out = services[i]
   var userid = context.query.userid;
   var role = context.query.role;
+  var on = context.query.on==="true";
+  console.log(on);
   const turn = useTimeLabel(); 
   const dayweek=getDayOfWeek();
   const contextFilter=[
@@ -69,7 +71,7 @@ export async function getServerSideProps(context) {
   //console.log(userid,role)
   console.log(contextFilter)
   
-  const { loading, error, data } = await client.query({query:getRecommended, variables:{userid:userid, topk:15, contextFilter:contextFilter, on:true}});
+  const { loading, error, data } = await client.query({query:getRecommended, variables:{userid:userid, topk:15, contextFilter:contextFilter, on:on}});
   if (loading) console.log("loading")
   if (error) console.log(JSON.stringify(error, null, 2));
 
