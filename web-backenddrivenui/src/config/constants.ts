@@ -23,8 +23,8 @@ export const ab_Testing={
 "ariane.atxa":false,
 "oescallada":true,
 "ibarrutia":false,
-"aicarrera":true,
-"flarrinaga":true
+"jjperalta":true,
+"flarrinaga":false
 }
 export const Cards = {
     BasicCard

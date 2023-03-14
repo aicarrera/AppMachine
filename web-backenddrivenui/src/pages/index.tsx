@@ -35,7 +35,11 @@ const Index = () =>{
     else{
       const userid = jsonResponse.id;
       const role = jsonResponse.role;
-      const on= constants.ab_Testing[username]
+      var on = true
+      if (username in constants.ab_Testing){
+         on= constants.ab_Testing[username]
+      }
+      
       router.push({
         pathname: "/main",
         query: { userid, role ,on}
