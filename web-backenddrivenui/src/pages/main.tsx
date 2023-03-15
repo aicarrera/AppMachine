@@ -99,7 +99,7 @@ export async function getServerSideProps(context) {
 const Main = ({recommended, userid, role, contextFilter,firstRecommended}) => {
            
             //Google Analytics 
-            ReactGA.initialize([{trackingId:'G-WSVTBCPP4D', gaOptions:{userId:userid}}]);
+            
             var valuesList = contextFilter.map(obj => obj.value);
             var transformedContext = valuesList.join(", ");
             ReactGA.send({ hitType: "pageview", page: "/main" , value: transformedContext});

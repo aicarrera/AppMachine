@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import * as constants from "../config/constants";
 import { Login } from '../config/interfaces';
-
+import ReactGA from 'react-ga4';
 async function login(username: String): Promise<Login> {
   try {
     const res = await fetch(constants._API_URL + 'getUser?username=' + username, {
@@ -23,6 +23,7 @@ async function login(username: String): Promise<Login> {
 }
 
 const Index = () =>{ 
+  
   const [username, setUserInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -39,7 +40,8 @@ const Index = () =>{
       if (username in constants.ab_Testing){
          on= constants.ab_Testing[username]
       }
-      
+      ReactGA.initialize([{trackingId:'G-WSVTBCPP4D', gaOptions:{userId:userid}}]);
+      ReactGA.send({ hitType: "pageview", page: "/index" , value: username});
       router.push({
         pathname: "/main",
         query: { userid, role ,on}
