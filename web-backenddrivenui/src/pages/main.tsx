@@ -100,7 +100,9 @@ const Main = ({recommended, userid, role, contextFilter,firstRecommended}) => {
            
             //Google Analytics 
             ReactGA.initialize([{trackingId:'G-WSVTBCPP4D', gaOptions:{userId:userid}}]);
-            ReactGA.send({ hitType: "pageview", page: "/main" , value: JSON.stringify(contextFilter)});
+            var valuesList = contextFilter.map(obj => obj.value);
+            var transformedContext = valuesList.join(", ");
+            ReactGA.send({ hitType: "pageview", page: "/main" , value: transformedContext});
             
             
             /*Matomo configuration   (TESTING GA4)                  

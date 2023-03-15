@@ -1,6 +1,6 @@
 export interface ContextFilter{
-    name:string
-    value:string
+    n:string
+    v:string
   }
   
 export interface RequestNextStep{
