@@ -77,8 +77,10 @@ export async function getServerSideProps(context) {
 
 
   
-  const randomIndex =  5 + Math.floor(Math.random() * (data.recommendedForYouItems.length - 5)); 
+  var randomIndex =   Math.floor(Math.random() * 4) + 2;//2 + Math.floor(Math.random() * (data.recommendedForYouItems.length - 11)); 
+  console.log("RandomIndex",randomIndex, data.recommendedForYouItems.length)
   const serendipity = [data.recommendedForYouItems[randomIndex]];
+  console.log("serendipity",serendipity)
   const firstRecommended = [...data.recommendedForYouItems.slice(0,2),...serendipity];
 // var restSugar=  await getSugar(firstRecommended[0].data.title);
 //  const sugarFirstRecommended= restSugar.valueInt;

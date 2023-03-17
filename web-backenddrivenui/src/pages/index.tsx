@@ -23,7 +23,7 @@ async function login(username: String): Promise<Login> {
 }
 
 const Index = () =>{ 
-  
+  const trackingID='G-WSVTBCPP4D'
   const [username, setUserInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,7 +40,7 @@ const Index = () =>{
       if (username in constants.ab_Testing){
          on= constants.ab_Testing[username]
       }
-      ReactGA.initialize([{trackingId:'G-WSVTBCPP4D', gaOptions:{userId:userid}}]);
+      ReactGA.initialize([{trackingId:trackingID, gaOptions:{userId:userid}}]);
       ReactGA.send({ hitType: "pageview", page: "/index" , value: username});
       router.push({
         pathname: "/main",

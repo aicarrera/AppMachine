@@ -32,7 +32,7 @@ import * as constants from "../../config/constants";
 }
 
 
-  function BasicCard({id, thumbnailUrl, title, setServiceSelected, serviceSelected, includeControls=false,  setActiveTab }) {
+  function BasicCard({id, thumbnailUrl, title, setServiceSelected, serviceSelected, includeControls=false,  setActiveTab , order}) {
   //const { trackEvent  } = useMatomo()
   const [value, setValue] = useState<number>(0);
   if (includeControls)   {
@@ -57,14 +57,14 @@ import * as constants from "../../config/constants";
       trackevent(e.currentTarget.id,"recommended",JSON.stringify(updatedService),1);    
    }
    else{
-      trackevent(e.currentTarget.id,"recommended",JSON.stringify({service:title, information: [{parameter:"sugar", value:value}]}),0);         
+      trackevent(e.currentTarget.id,"recommended",JSON.stringify({service:title, information: [{parameter:"sugar", value:value}],"order":order}),-1);         
    }
    setActiveTab(index); 
    //trackEvent({ category: 'button', action: 'click-event'});  //matomo
   }
 
   async function handleRating(e, id, title, parameter, interactionValue){
-    trackevent(e.currentTarget.id,"recommended",JSON.stringify({service:title, information: [{parameter:"sugar", value:parameter}]}),interactionValue); 
+    trackevent(e.currentTarget.id,"recommended",JSON.stringify({service:title, information: [{parameter:"sugar", value:parameter}],"order":order}),interactionValue); 
     toast({      
       description: "Thanks for rating "+title,
       status: 'success',

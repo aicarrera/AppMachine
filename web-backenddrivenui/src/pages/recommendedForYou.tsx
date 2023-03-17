@@ -1,6 +1,5 @@
 import { Heading, Icon, VStack, HStack, Stack } from "@chakra-ui/react"
 import { BiBookmarkHeart } from "react-icons/bi"
-import * as constants from "../config/constants";
 import ServicesRecommended from "./servicesRecommended";
 
 const Recommended = ({firstRecommended, setActiveTab, setServiceSelected}) => {
