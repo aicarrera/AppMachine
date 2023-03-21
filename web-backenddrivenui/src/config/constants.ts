@@ -11,23 +11,25 @@ export const GRAPHQL= "http://34.175.76.43:4000/graphql";
 
 export const ab_Testing={
 "dreguera":true,
-"mugarte":false,
+"mugarte":true,
 "ialdalur":true,
-"umarkiegi":false,
+"umarkiegi":true,
 "millarramendi":true,
-"letxeberria":false,
+"letxeberria":true,
 "wsochoa":true,
-"olizarralde":false,
+"olizarralde":true,
 "glasa":true,
-"amaia.echave":false,
+"amaia.echave":true,
 "aapraizi":true,
-"ariane.atxa":false,
+"ariane.atxa":true,
 "oescallada":true,
-"ibarrutia":false,
+"ibarrutia":true,
 "jjperalta":true,
-"flarrinaga":false,
+"flarrinaga":true,
 "xvalencia":true
 }
 export const Cards = {
     BasicCard
 };
+
+export const OPENAI_KEY="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"
