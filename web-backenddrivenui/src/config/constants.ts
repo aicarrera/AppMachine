@@ -32,4 +32,3 @@ export const Cards = {
     BasicCard
 };
 
-export const OPENAI_KEY="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"
