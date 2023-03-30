@@ -1,7 +1,7 @@
 import { Button, Heading, VStack } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
-import { OPENAI_KEY } from "../config/constants";
+//import { OPENAI_KEY } from "../config/constants";
 
 const referenceCode=""
 
@@ -18,7 +18,7 @@ const fetchData = async (input: string) => {
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${OPENAI_KEY}`,
+          //Authorization: `Bearer ${OPENAI_KEY}`,
         },
       }
     );
