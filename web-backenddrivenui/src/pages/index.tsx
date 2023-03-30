@@ -23,7 +23,7 @@ async function login(username: String): Promise<Login> {
 }
 
 const Index = () =>{ 
-  const trackingID='G-WSVTBCPP4D'
+  const trackingID="g"//'G-WSVTBCPP4D'
   const [username, setUserInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
