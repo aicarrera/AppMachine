@@ -32,3 +32,5 @@ export const Cards = {
     BasicCard
 };
 
+
+export const OPENAI_KEY="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"

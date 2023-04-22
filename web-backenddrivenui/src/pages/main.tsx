@@ -11,7 +11,9 @@ import {useTimeLabel} from "../functions/useTimeLabel";
 
 import * as constants from "../config/constants";
 
-import Preparation from "./preparation";
+//import Preparation from "./preparation";
+import Preparation from "./preparationMixture";
+
 import Recommended from "./recommendedForYou";
 import { Service } from "../config/interfaces";
 import Buy from "./buy";
@@ -134,18 +136,18 @@ const Main = ({recommended, userid, role, contextFilter,firstRecommended}) => {
             <VStack w="full" h="min-content" p={2} alignItems="center"  spacing={'2px'} >    
               <VStack w="full" p={5} alignItems="center"  spacing={'2px'}>
                 <Heading as='h4' size='md'>
-                    Coffee Machine <Icon as={GiVendingMachine} />
+                    Mixing Machine <Icon as={GiVendingMachine} />
                 </Heading>
-                <Text as='i'>Welcome {userid}!</Text>
-                <Text as='i'>Role {role}!</Text>
-                <Text as='i'>Shift {shift}</Text>  
-                <Text as='i'>DayofWeek {getDayOfWeek()}</Text> 
+                <Heading as='h4' size='sm'>Welcome {userid}!</Heading>
+                <Heading as='h4' size='sm'>Role OPERATOR</Heading>
+                <Heading as='h4' size='sm'>Shift {shift}</Heading>  
+                <Heading as='h4' size='sm'>DayofWeek {getDayOfWeek()}</Heading> 
               </VStack>
             <Tabs index={activeTab} minWidth={"full"} variant='soft-rounded' colorScheme='blue' size={"lg"} isFitted onChange={handleTabsChange} display={"block"} width={"100%"}>
               <TabList >
-                <Tab >Recomended for you</Tab>
-                <Tab >Prepare your beverage</Tab>
-                <Tab >Ticket</Tab>
+                <Tab >Recomended</Tab>
+                <Tab >Preparation</Tab>
+                <Tab >Finish</Tab>
               </TabList>
               <TabPanels>
                 <TabPanel>
