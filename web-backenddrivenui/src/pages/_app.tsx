@@ -7,8 +7,8 @@ import { MatomoProvider, createInstance } from '@jonkoops/matomo-tracker-react'
 import * as constants from "../config/constants";
 
 const instanceConfig= (userID:string)=>{
-  const config =    { urlBase: constants.MatomoServerUrl,
-                      siteId: constants.MatomoSiteId,
+  const config =    { //urlBase: constants.MatomoServerUrl,
+                      //siteId: constants.MatomoSiteId,
                       userId: userID, // optional, default value: `undefined`.
                       disabled: false, // optional, false by default. Makes all tracking calls no-ops if set to true.
                       heartBeat: { // optional, enabled by default
