@@ -11,8 +11,8 @@ import {useTimeLabel} from "../functions/useTimeLabel";
 
 import * as constants from "../config/constants";
 
-//import Preparation from "./preparation";
-import Preparation from "./preparationMixture";
+import Preparation from "./preparation";
+//import Preparation from "./preparationMixture";
 
 import Recommended from "./recommendedForYou";
 import { Service } from "../config/interfaces";
@@ -136,10 +136,10 @@ const Main = ({recommended, userid, role, contextFilter,firstRecommended}) => {
             <VStack w="full" h="min-content" p={2} alignItems="center"  spacing={'2px'} >    
               <VStack w="full" p={5} alignItems="center"  spacing={'2px'}>
                 <Heading as='h4' size='md'>
-                    Mixing Machine <Icon as={GiVendingMachine} />
+                    CoffeeVending Machine <Icon as={GiVendingMachine} />
                 </Heading>
                 <Heading as='h4' size='sm'>Welcome {userid}!</Heading>
-                <Heading as='h4' size='sm'>Role OPERATOR</Heading>
+                <Heading as='h4' size='sm'>Role {role}</Heading>
                 <Heading as='h4' size='sm'>Shift {shift}</Heading>  
                 <Heading as='h4' size='sm'>DayofWeek {getDayOfWeek()}</Heading> 
               </VStack>

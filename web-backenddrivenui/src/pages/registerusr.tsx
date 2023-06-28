@@ -3,6 +3,22 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import router from 'next/router';
 import { useState } from 'react';
 import * as constants from "../config/constants";
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+
+const client = new ApolloClient({
+  uri: constants.GRAPHQL,
+  cache: new InMemoryCache(),
+});
+
+const registerUser = gql`
+ mutation insertUser($userid:String, $username:String, $role:String){
+  registerUser(userid:$userid, username:$username, role:$role) {
+    userid
+    username
+  }
+}
+`;
+
 function getRandomString() {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let result = '';
@@ -19,7 +35,30 @@ const RegisterUsr = () =>{
   const initialValues = {
     id: '',
     name: '',
-    role: ''
+    role: 'undergraduate'
+  };
+
+  const handleUserSubmit= async(values)=>{
+    values.id=getRandomString();
+  try { 
+    const { data } = await client.mutate({
+      mutation: registerUser,
+      variables: {
+        userid: values.id,
+        username: values.name,
+        role: values.role,
+      }
+    });
+    router.push({
+      pathname: "/",
+     
+    });
+    setIsLoading(true);
+
+  } catch (error) {
+    console.error("Error executing mutation:", error);
+  }
+
   };
 
   const handleSubmit = async (values) => {
@@ -51,7 +90,7 @@ const RegisterUsr = () =>{
     const errors = {name:"",role:""};
 
     if (!values.name) {
-      errors.name = 'Username is required';
+      errors.name = 'Email is required';
     }
 
     if (!values.role) {
@@ -68,20 +107,21 @@ const RegisterUsr = () =>{
     {({values, errors, touched, isValidating, isSubmitting, submitForm}) => (
       
       <Form>
-        <label htmlFor="username">Username:</label>
-        <Field type="text" id="name" name="name" placeholder="Enter your username" />
+        <label htmlFor="username">Email:</label>
+        <Field type="text" id="name" name="name" placeholder="Enter your email" />
         <ErrorMessage name="name" />
 
         <label>Role:</label>
-        <Field as="select" id="role" name="role" placeholder='Select role'>
+        <Field as="select" id="role" name="role" placeholder='Select role' defaultValue="undergraduate">
+          <option value="undergraduate">undergraduate student</option>          
+          <option value="doctoral student">doctoral student</option>
           <option value="supervisor">supervisor</option>
-          <option  value="administrative">administrative</option>
-          <option  value="doctoral student">doctoral student</option>
+          <option value="administrative">administrative</option>
           <option value="coordinator">coordinator</option>
-          <option  value="associated teacher">associated teacher</option>
+          <option value="associated teacher">associated teacher</option>
         </Field>
         <ErrorMessage name="role" />
-        <Button colorScheme='teal' size='sm' onClick={e=>handleSubmit(values)}>Register</Button>   
+        <Button colorScheme='teal' size='sm' onClick={e=>handleUserSubmit(values)}>Register</Button>   
         {isLoading && (
         <Spinner
           size="xl"

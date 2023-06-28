@@ -1,6 +1,6 @@
 import { ChakraProvider } from '@chakra-ui/react'
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-
+import  '../styles/css/app.css'
 import theme from '../theme'
 import { AppProps } from 'next/app'
 import { MatomoProvider, createInstance } from '@jonkoops/matomo-tracker-react'

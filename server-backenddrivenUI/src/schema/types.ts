@@ -57,8 +57,17 @@ input ContextFilter{
   name:String
   value:String
 }
+type User{  
+  userid:String!
+  username:String!
+  role:String!
+}
 type Query { 
   recommendedForYouItems(userid:String, topk:Int, contextFilter:[ContextFilter], on:Boolean): [ICard!]!
+  getUserById(userid:String):User!
 }
-
+type Mutation{
+  insertInteractions(userId:String, elementId:String, relatedData:String):Boolean
+  registerUser(userid:String, username:String, role:String): User!
+}
 `

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import Chatbot, { createChatBotMessage } from "react-chatbot-kit";
+import React, { Key, useEffect, useState } from "react";
+import Chatbot from "react-chatbot-kit";
 import 'react-chatbot-kit/build/main.css'
-
+import { HStack, Image } from '@chakra-ui/react'
 import ActionProvider from '../config/ActionProvider';
 import MessageParser from '../config/MessageParser';
 import config from '../config/config';
@@ -9,7 +9,7 @@ import { useTimeLabel } from '../functions/useTimeLabel';
 import { getDayOfWeek } from '../functions/getDayOfWeek';
 import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
 import * as constants from "../config/constants";
-import { Heading, Icon, Spinner, VStack } from "@chakra-ui/react";
+import { Box, Button, Heading, Icon, Popover, PopoverBody, PopoverCloseButton, PopoverContent, PopoverTrigger, VStack } from "@chakra-ui/react";
 import { GiVendingMachine } from "react-icons/gi";
 import ChatService from "../config/ChatService";
 
@@ -39,10 +39,7 @@ async function getSugar( title ){
     "Content-Type": "application/json",
     "GRAPHDB_SERVER":constants._GRAPHDBSERVER},
     });
-    console.log("response:",res);
-    if (res.status === 500) {
-      return { valueInt: 0 };
-    }
+    console.log(res);
     return await res.json();
    
   }
@@ -86,80 +83,48 @@ export async function getServerSideProps(context) {
 
   
   var randomIndex =   Math.floor(Math.random() * 4) + 2;//2 + Math.floor(Math.random() * (data.recommendedForYouItems.length - 11)); 
-  //console.log("RandomIndex",randomIndex, data.recommendedForYouItems.length)
+  console.log("RandomIndex",randomIndex, data.recommendedForYouItems.length)
   const serendipity = [data.recommendedForYouItems[randomIndex]];
   console.log("serendipity",serendipity)
-  //Fill drinks sequentially using for..of
-  let drinks=[]
   const firstRecommended = [...data.recommendedForYouItems.slice(0,2),...serendipity];
-  for (const item of [...firstRecommended,...data.recommendedForYouItems.slice(2,data.recommendedForYouItems.length)]) {  
-    try {
-      const sugar = await getSugar(item.data.title);
-      const drink = { "drink": item.data.title, "sugar": sugar.valueInt };
-      drinks.push(drink);
-    } catch (error) {
-      console.log("Error fetching sugar for", item.data.title);
-      console.log(error);
-    }
-  }
+
   return {
     props: {
       recommended: data.recommendedForYouItems,
       userid:userid,  
       role:role,    
       contextFilter:contextFilter,
-      firstRecommended:firstRecommended ,  
-      drinks:drinks
+      firstRecommended:firstRecommended   
     },
  };
 
 }
 
-
- function coffeeChatbot({recommended, userid, role, contextFilter,firstRecommended,drinks}) {
-
-  console.log("drinks",drinks)
-  //Starting chat service
+function x({recommended, userid, role, contextFilter,firstRecommended}) {
+  const [drinks, setDrinks] = useState([]);
   const chatService = new ChatService(drinks);
 
-  const [firstResponse, setfirstResponse] = useState("-"); 
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-
-        chatService.setDrinks=drinks
-        console.log("drinks", chatService.getDrinks)
-        const r = await chatService.sendMessageToAPI("dame una recomendación para mi por favor con la cantidad adecuada de azucar");
-        // Handle the response from the API
-        setfirstResponse(r)
-      } catch (error) {
-        // Handle any errors that occur during the API request
-        console.error(error);
+  firstRecommended?.forEach((item) => {
+    console.log(item.data.title)
+    useEffect(() => {
+      async function fetchData() {
+        const sugar = await getSugar(item.data.title);
+        const drink = { "drink": item.data.title, "sugar": sugar.valueInt };
+        setDrinks((prevDrinks) => [...prevDrinks, drink]);
       }
-    };
-
-    fetchData()
-  },drinks);
-
-  //Initial Message
-  
-useEffect(() => {
-  console.log("First",firstResponse)
-  if(firstResponse!="-" && drinks.length>0){
-  chatService.setChatHistory({role: "assistant", content: firstResponse})  
-  }
-}, [firstResponse]);
-
+      fetchData();
+    }, [item.data.title]);
+  });
+  console.log(drinks)
   var shift = useTimeLabel();    
   return (
 
     <div className="App">
-    <VStack w="full" h="100%" maxH={"100%"} p={5} alignItems="center" spacing={6}   >
-      <VStack alignItems={"center"} spacing={2} w="full">
-      <Heading as='h3' size='md'>
-                    CoffeeVending Machine <Icon as={GiVendingMachine} />
-                </Heading>
+    <HStack w="full" h="100%" maxH={"100%"} p={5} alignItems="flex-start" spacing={6}   >
+      <VStack alignItems="flex-start" spacing={2}>
+        <Heading as="h3" size="md">
+          CoffeeVending Machine
+        </Heading>
         <Heading as="h4" size="sm">
           Welcome {userid}!
         </Heading>
@@ -175,34 +140,52 @@ useEffect(() => {
           Day of Week {getDayOfWeek()}
         </Heading>
       </VStack>
-      
-      {firstResponse === "-" || drinks.length==0? (
-        <Spinner size="xl" />
-      ) : (
-        <VStack p={5} alignItems="center" spacing={2} borderWidth="1px" borderColor="gray.300" borderRadius="md">
-          <Chatbot
-            config={{
-              ...config,
-              initialMessages: [createChatBotMessage(`Hola! Soy Cofi, tu barista. ${firstResponse}`, { widget: 'approveFirstOption' })],
-            }}
-            messageParser={MessageParser}
-            actionProvider={(props) => (
-              <ActionProvider
-                {...props}
-                client={client}
-                createChatBotMessage={props.createChatBotMessage}
-                setState={props.setState}
-                userid={userid}
-                firstRecommended={firstRecommended}
-                chatService={chatService}
-              />
-            )}
-          />
-        </VStack>
-      )}
-    </VStack>
+      <Popover placement="top-end">
+      <PopoverTrigger>
+        <Button
+          position="fixed"
+          bottom={4}
+          right={4}
+          zIndex={9999}
+          borderRadius="full"
+          bgColor="teal.500"
+          color="white"
+          px={4}
+          py={2}
+          fontWeight="bold"
+          fontSize="sm"
+          leftIcon={<Icon as={GiVendingMachine} />}
+        >
+          Barista Bot
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent>
+        <PopoverCloseButton />
+        <PopoverBody>
+          <VStack w="full" p={5} alignItems="center" spacing={2}>
+            <Chatbot
+              config={config}
+              messageParser={MessageParser}
+              actionProvider={(props) => (
+                <ActionProvider
+                  {...props}
+                  createChatBotMessage={props.createChatBotMessage}
+                  setState={props.setState}
+                  firstRecommended={firstRecommended}
+                  chatService={chatService}
+                 
+                />
+              )}
+            />
+          </VStack>
+        </PopoverBody>
+      </PopoverContent>
+    </Popover>
+    </HStack>
+
+ 
   </div>
 );
-            }
+}
 
-export default coffeeChatbot;
+export default x;

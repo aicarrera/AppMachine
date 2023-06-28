@@ -48,7 +48,13 @@ import * as constants from "../../config/constants";
   const toast = useToast();  
   
   const [buttonState, setButtonState] = useState(null);
-  
+  //TRANSLATE TO SPANISH REPLACED TITLE
+  var spanish_translate = title
+  var spanish_description= "Compra esta bebida!"
+  if (title in constants.translationDictionary){
+    spanish_translate= constants.translationDictionary[title].value;
+    spanish_description=constants.translationDictionary[title].description;
+  }
  
   function handleSelect(e, title:String, index:number, acceptRecommendation:boolean=true) {  
    if (acceptRecommendation){  
@@ -96,9 +102,11 @@ import * as constants from "../../config/constants";
       <Card align={"center"} variant="elevated" >    
       <CardBody id={id} >
       <Stack mt='6' spacing='1' alignItems={"center"}> 
-        <Heading size='sm'>{title}</Heading>   
+        <Heading size='sm'>{spanish_translate}</Heading>   
         <Image className="BasicCard_thumbnail" alt="todo" src={thumbnailUrl}   borderRadius='full'  boxSize='50px'/>              
         {includeControls ? <NumberInput label={"Sugar"} idIncrement={"btn4sugarinc"} idDecrease={"btn4sugardec"} defaultValue={value} onChange={handleChangeInput}></NumberInput> : null  }        
+        <Text size='xs' width={40} align={'center'} noOfLines={3}>{spanish_description}</Text>   
+        
         </Stack>
       </CardBody>
       <CardFooter   justify='space-between'

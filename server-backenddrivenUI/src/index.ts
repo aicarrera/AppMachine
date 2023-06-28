@@ -3,8 +3,11 @@ import { ApolloServer } from "apollo-server-express";
 import typeDefs from "./schema/types";
 import resolvers from "./schema/resolvers";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
+const cors = require('cors');
+
 const main = async () => {
     const app = express();
+    app.use(cors());
 
      
     const apolloServer = new ApolloServer({

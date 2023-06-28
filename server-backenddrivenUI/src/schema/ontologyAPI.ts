@@ -1,4 +1,6 @@
 
+//export const _GRAPHDBSERVER="http://34.175.76.43:7200/";
+//export const _API_URL='http://34.175.76.43:8080/APIContextInteraction/api/headers/';
 
 const _GRAPHDBSERVER="http://localhost:7200/"
 const _API_URL='http://localhost:8080/APIContextInteraction/api/headers/'

@@ -7,7 +7,8 @@ import { useState } from "react";
 import * as constants from "../config/constants";
 import { Login } from '../config/interfaces';
 import ReactGA from 'react-ga4';
-async function login(username: String): Promise<Login> {
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+/*async function login(username: String): Promise<Login> {
   try {
     const res = await fetch(constants._API_URL + 'getUser?username=' + username, {
       method: 'GET',
@@ -17,6 +18,30 @@ async function login(username: String): Promise<Login> {
       }
     });
     return await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+}
+*/
+
+const client = new ApolloClient({
+  uri: constants.GRAPHQL,
+  cache: new InMemoryCache(),
+});
+const userLogin = gql`
+ query login($userid:String){
+  getUserById(userid:$userid) {
+    userid
+    username
+    role
+}}
+`;
+async function login(username: String): Promise<Login> {
+  try {
+    const { loading, error, data } = await client.query({query:userLogin, variables:{userid:username}});
+    if (loading) console.log("loading")
+    if (error) console.log(JSON.stringify(error, null, 2));
+    return ({id:data.getUserById.userid, role:data.getUserById.role})
   } catch (error) {
     console.log(error);
   }
@@ -57,7 +82,7 @@ const Index = () =>{
     <Heading as='h4' size='md' >
       Coffee Machine <Icon as={GiVendingMachine} />
     </Heading>
-    <InputField label="User ID" id="userId" placeholder="Enter your user ID" value={username} onChange={e => setUserInput(e.target.value)}></InputField>
+    <InputField label="User ID" id="userId" placeholder="Enter your email" value={username} onChange={e => setUserInput(e.target.value)}></InputField>
     <Button w="full" onClick={handleLogin} isLoading={isLoading}>Login</Button>
     {isLoading && (
         <Spinner
