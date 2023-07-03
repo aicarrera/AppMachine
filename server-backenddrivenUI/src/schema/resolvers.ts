@@ -1,6 +1,7 @@
 import {calculateRatings, getSubservicesRecommendation, Subservice } from './ontologyAPI';
 const { Client } = require('pg');
-const connection = 'postgres://postgres:postgres@localhost:5432/interactions'
+const host='postgresdb' //localhost
+const connection = 'postgres://postgres:postgres@'+host+':5432/interactions'
 
 // database connection
 async function getUserById(_: any, args: any) {
