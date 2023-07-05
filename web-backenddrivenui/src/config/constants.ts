@@ -1,10 +1,10 @@
 import BasicCard from "../components/Cards/BasicCard";
 //export const MatomoServerUrl="http://34.162.231.82/";
 //export const MatomoSiteId=1;
-const url = "34.175.85.15"
-export const _GRAPHDBSERVER="http://"+url+":7200/";
-export const _API_URL='http://'+url+':8080/APIContextInteraction/api/headers/';
-export const GRAPHQL= "http://"+url+"4000/graphql";
+const url = "http://34.175.85.15"
+export const _GRAPHDBSERVER=url+":7200/";
+export const _API_URL=url+':8080/APIContextInteraction/api/headers/';
+export const GRAPHQL= url+"/apigraphql/graphql";
 
 //export const GRAPHQL= "http://localhost:4000/graphql";
 //export const _GRAPHDBSERVER="http://localhost:7200/";
