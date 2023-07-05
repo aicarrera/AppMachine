@@ -104,7 +104,7 @@ import * as constants from "../../config/constants";
       <Stack mt='6' spacing='1' alignItems={"center"}> 
         <Heading size='sm'>{spanish_translate}</Heading>   
         <Image className="BasicCard_thumbnail" alt="todo" src={thumbnailUrl}   borderRadius='full'  boxSize='50px'/>              
-        {includeControls ? <NumberInput label={"Sugar"} idIncrement={"btn4sugarinc"} idDecrease={"btn4sugardec"} defaultValue={value} onChange={handleChangeInput}></NumberInput> : null  }        
+        {includeControls ? <NumberInput label={"Sugar"} idIncrement={"btn4sugarinc"+'_'+title} idDecrease={"btn4sugardec"+'_'+title} defaultValue={value} onChange={handleChangeInput} userid={userid}></NumberInput> : null  }        
         <Text size='xs' width={40} align={'center'} noOfLines={3}>{spanish_description}</Text>   
         
         </Stack>

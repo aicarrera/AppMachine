@@ -99,15 +99,16 @@ export async function getServerSideProps(context) {
  };
 
 }
-
+var login=true
 const Main = ({recommended, userid, role, contextFilter,firstRecommended}) => {
            
             //Google Analytics 
-            
             var valuesList = contextFilter.map(obj => obj.value);
             var transformedContext = valuesList.join(", ");
-            trackevent("login", "main",transformedContext, userid,0);
- 
+            if (login){
+              trackevent("login", "main",transformedContext, userid,0);
+              login=false
+            }
             
             /*Matomo configuration   (TESTING GA4)                  
             //const { trackPageView, trackEvent, pushInstruction  } = useMatomo()
@@ -127,7 +128,7 @@ const Main = ({recommended, userid, role, contextFilter,firstRecommended}) => {
             const tabIds=["recommended_for_you","preparation","buy"]
             const handleTabsChange = (index) => {
               //trackEvent({ category: 'tab-change', action: 'click-event', value:index});  //Matomo tracking            
-              trackevent("tab"+tabIds[index],"main",tabIds[index],index,userid);  
+              trackevent("tab"+tabIds[index],"main",tabIds[index],userid,0);  
               setActiveTab(index); 
             }
 
