@@ -2,7 +2,7 @@ import BasicCard from "../components/Cards/BasicCard";
 //export const MatomoServerUrl="http://34.162.231.82/";
 //export const MatomoSiteId=1;
 const url = "http://34.175.85.15"
-export const _GRAPHDBSERVER="graphdb:7200/"
+export const _GRAPHDBSERVER="http://graphdb:7200/"
 export const _API_URL=url+':8080/APIContextInteraction/api/headers/';
 export const GRAPHQL= url+"/apigraphql/graphql";
 
