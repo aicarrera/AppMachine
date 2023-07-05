@@ -60,17 +60,17 @@ import * as constants from "../../config/constants";
    if (acceptRecommendation){  
       const updatedService = { service:title, information: [{parameter:"sugar", value:value}] }  
       setServiceSelected(updatedService)
-      trackevent(e.currentTarget.id,"recommended",JSON.stringify(updatedService),1);    
+      trackevent(e.currentTarget.id,"recommended",JSON.stringify(updatedService),userid,1);    
    }
    else{
-      trackevent(e.currentTarget.id,"recommended",JSON.stringify({service:title, information: [{parameter:"sugar", value:value}],"order":order}),-1);         
+      trackevent(e.currentTarget.id,"recommended",JSON.stringify({service:title, information: [{parameter:"sugar", value:value}],"order":order}),userid,-1);         
    }
    setActiveTab(index); 
    //trackEvent({ category: 'button', action: 'click-event'});  //matomo
   }
 
   async function handleRating(e, id, title, parameter, interactionValue){
-    trackevent(e.currentTarget.id,"recommended",JSON.stringify({service:title, information: [{parameter:"sugar", value:parameter}],"order":order}),interactionValue); 
+    trackevent(e.currentTarget.id,"recommended",JSON.stringify({service:title, information: [{parameter:"sugar", value:parameter}],"order":order}),userid,interactionValue); 
     toast({      
       description: "Thanks for rating "+title,
       status: 'success',

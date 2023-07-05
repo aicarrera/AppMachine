@@ -72,7 +72,7 @@ const ActionProvider = ({ createChatBotMessage, setState, firstRecommended,chatS
 
   };
   const handleYes = async () => {
-    trackevent("btnYes","chatbot",JSON.stringify({}),0,userid); 
+    trackevent("btnYes","chatbot",JSON.stringify({}),userid,0); 
     const response = await chatService.sendMessageToAPI("Si, gracias");
     chatService.setChatHistory({role: "assistant", content: response})
     console.log(chatService.getChatHistory)
@@ -88,7 +88,7 @@ const ActionProvider = ({ createChatBotMessage, setState, firstRecommended,chatS
   };
 
   const handleFinish = async () => {
-    trackevent("btnFinish", "chatbot","", 0,userid);
+    trackevent("btnFinish", "chatbot","", userid,0);
     console.log(chatService.getChatHistory.toString());
   
     try {
@@ -113,7 +113,7 @@ const ActionProvider = ({ createChatBotMessage, setState, firstRecommended,chatS
   };
   
   const handleNo = async () => {
-    trackevent("btnNo","chatbot",JSON.stringify({}),0,userid); 
+    trackevent("btnNo","chatbot",JSON.stringify({}),userid,0); 
     const response = await chatService.sendMessageToAPI("No, muestrame opciones");
     chatService.setChatHistory({role: "assistant", content: response})  
     setState((prevState) => ({

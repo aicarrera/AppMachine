@@ -25,7 +25,7 @@ import { getDayOfWeek } from "../functions/getDayOfWeek";
 
 
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
   uri: constants.GRAPHQL,
   cache: new InMemoryCache(),
 });
@@ -106,8 +106,8 @@ const Main = ({recommended, userid, role, contextFilter,firstRecommended}) => {
             
             var valuesList = contextFilter.map(obj => obj.value);
             var transformedContext = valuesList.join(", ");
-            ReactGA.send({ hitType: "pageview", page: "/main" , value: transformedContext});
-            
+            trackevent("login", "main",transformedContext, userid,0);
+ 
             
             /*Matomo configuration   (TESTING GA4)                  
             //const { trackPageView, trackEvent, pushInstruction  } = useMatomo()

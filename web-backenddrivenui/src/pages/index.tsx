@@ -8,6 +8,7 @@ import * as constants from "../config/constants";
 import { Login } from '../config/interfaces';
 import ReactGA from 'react-ga4';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import { trackevent } from '../functions/useTrackersGA4';
 /*async function login(username: String): Promise<Login> {
   try {
     const res = await fetch(constants._API_URL + 'getUser?username=' + username, {
@@ -67,6 +68,7 @@ const Index = () =>{
       }
       ReactGA.initialize([{trackingId:trackingID, gaOptions:{userId:userid}}]);
       ReactGA.send({ hitType: "pageview", page: "/index" , value: username});
+
       router.push({
         pathname: "/main",
         query: { userid, role ,on}
