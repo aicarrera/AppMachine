@@ -1,7 +1,7 @@
 
 //export const _GRAPHDBSERVER="http://34.175.76.43:7200/";
 //export const _API_URL='http://34.175.76.43:8080/APIContextInteraction/api/headers/';
-const apihost='34.175.76.43' //localhost
+const apihost='34.175.85.15' //localhost
 const _GRAPHDBSERVER="http://"+apihost+":7200/"
 const _API_URL='http://'+apihost+':8080/APIContextInteraction/api/headers/'
 const fetch = require('node-fetch');
