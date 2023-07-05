@@ -1,4 +1,3 @@
-import BasicCard from "../components/Cards/BasicCard";
 //export const MatomoServerUrl="http://34.162.231.82/";
 //export const MatomoSiteId=1;
 const url = "http://34.175.85.15"
@@ -97,9 +96,7 @@ export const translationDictionary = {
     },
  
 }
-export const Cards = {
-    BasicCard
-};
+
 
 
 export const OPENAI_KEY="k"

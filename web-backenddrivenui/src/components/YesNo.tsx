@@ -15,7 +15,7 @@ function YesNo({label, id, defaultValue=false, isDisabled=false}) {
       isClosable: true,
     })
     setIsChecked(!isChecked);
-    trackevent(e.target.id,"preparation","");    
+    trackevent(e.target.id,"preparation","","");    
 
   }
   return (

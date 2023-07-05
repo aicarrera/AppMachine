@@ -127,7 +127,7 @@ const Main = ({recommended, userid, role, contextFilter,firstRecommended}) => {
             const tabIds=["recommended_for_you","preparation","buy"]
             const handleTabsChange = (index) => {
               //trackEvent({ category: 'tab-change', action: 'click-event', value:index});  //Matomo tracking            
-              trackevent("tab"+tabIds[index],"main",tabIds[index],index);  
+              trackevent("tab"+tabIds[index],"main",tabIds[index],index,userid);  
               setActiveTab(index); 
             }
 
@@ -151,13 +151,13 @@ const Main = ({recommended, userid, role, contextFilter,firstRecommended}) => {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                    <Recommended setServiceSelected={setServiceSelected} firstRecommended={firstRecommended}  setActiveTab={setActiveTab}/> 
+                    <Recommended userid={userid} setServiceSelected={setServiceSelected} firstRecommended={firstRecommended}  setActiveTab={setActiveTab}/> 
                 </TabPanel>
                 <TabPanel>
-                    <Preparation recommended={recommended} contextFilter={contextFilter} setServiceSelected={setServiceSelected} setActiveTab={setActiveTab} />
+                    <Preparation userid={userid} recommended={recommended} contextFilter={contextFilter} setServiceSelected={setServiceSelected} setActiveTab={setActiveTab} />
                 </TabPanel>
                 <TabPanel>
-                    <Buy serviceSelected={serviceSelected}></Buy>
+                    <Buy userid={userid} serviceSelected={serviceSelected}></Buy>
                 </TabPanel>
               </TabPanels>
             </Tabs>

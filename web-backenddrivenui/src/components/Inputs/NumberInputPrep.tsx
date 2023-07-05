@@ -16,7 +16,7 @@ function NumberInputPrep({label, idIncrement, idDecrease, onChange, defaultValue
       setValue(value + valueOperation);
       
     }
-    trackevent(e.target.id,"preparation","");   
+    trackevent(e.target.id,"preparation","","");   
   };
 
 

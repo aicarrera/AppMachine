@@ -41,14 +41,14 @@ async function getNextElement(r:RequestNextStep){
 
   
 
-const Preparation = ({recommended,contextFilter, setServiceSelected, setActiveTab}) => {
+const Preparation = ({recommended,contextFilter, setServiceSelected, setActiveTab, userid}) => {
   const [servicepreparation, setServicePreparation] = useState<Service>({service:"", information:[{parameter: "sugar", value:"-"},{parameter: "cup", value:"Yes"}]});;
 
   async function handleTriggerClick(cf:ContextFilter[],historyElementUI:String[],elementId:string) {  
     //var data= await getNextElement({contextList:cf,elementUI:historyElementUI});
     //var button1 = document.getElementById(data.element);
     //button1.click(); por ahora esto se desactiva
-    trackevent(elementId,"preparation",JSON.stringify(servicepreparation));    
+    trackevent(elementId,"preparation",JSON.stringify(servicepreparation), userid);    
   }
 /*const handleAddInformation = (information: Information) => {
   setServicePreparation({...servicepreparation, information: [...servicepreparation.information, information]});
@@ -129,7 +129,7 @@ return (
     <AccordionPanel pb={4}>
 
     <SimpleGrid w="full" spacing={4} templateColumns='repeat(auto-fill, minmax(200px, 1fr))' alignItems="center">              
-        <ServicesRecommended recommended={recommended} servicepreparation={servicepreparation} setServicePreparation={setServicePreparation} />
+        <ServicesRecommended recommended={recommended} servicepreparation={servicepreparation} setServicePreparation={setServicePreparation} userid={userid} />
       </SimpleGrid>
     </AccordionPanel>
   </AccordionItem>

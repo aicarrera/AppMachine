@@ -32,7 +32,7 @@ import * as constants from "../../config/constants";
 }
 
 
-  function BasicCard({id, thumbnailUrl, title, setServiceSelected, serviceSelected, includeControls=false,  setActiveTab , order}) {
+  function BasicCard({id, thumbnailUrl, title, setServiceSelected, serviceSelected, includeControls=false,  setActiveTab , order, userid}) {
   //const { trackEvent  } = useMatomo()
   const [value, setValue] = useState<number>(0);
   if (includeControls)   {
@@ -94,7 +94,7 @@ import * as constants from "../../config/constants";
       duration: 3000,
       isClosable: true,
     });
-    trackevent(e.target.id,"preparation",JSON.stringify(serviceSelected));   
+    trackevent(e.target.id,"preparation",JSON.stringify(serviceSelected),userid);   
 
   }
     return (  

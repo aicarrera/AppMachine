@@ -3,10 +3,10 @@ import router from "next/router";
 import { trackevent } from "../functions/useTrackersGA4";
 import { Service } from "../config/interfaces";
 
-const Buy = ({serviceSelected}:{serviceSelected:Service}) => {
+const Buy = ({serviceSelected, userid}:{serviceSelected:Service,userid:any}) => {
     
     function handleclick(e){
-      trackevent(e.target.id,"ticket",JSON.stringify(serviceSelected));         
+      trackevent(e.target.id,"ticket",JSON.stringify(serviceSelected), userid);         
       router.push({
          pathname: "/",      
        });
