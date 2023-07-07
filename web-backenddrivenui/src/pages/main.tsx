@@ -22,6 +22,7 @@ import Buy from "./buy";
 import ReactGA from 'react-ga4';
 import { trackevent } from "../functions/useTrackersGA4";
 import { getDayOfWeek } from "../functions/getDayOfWeek";
+import { login_flag } from "./index";
 
 
 
@@ -99,15 +100,14 @@ export async function getServerSideProps(context) {
  };
 
 }
-var login=true
 const Main = ({recommended, userid, role, contextFilter,firstRecommended}) => {
-           
+            const [isNewLogin, setLogin] = useState(true);
             //Google Analytics 
             var valuesList = contextFilter.map(obj => obj.value);
             var transformedContext = valuesList.join(", ");
-            if (login){
+            if (isNewLogin){
               trackevent("login", "main",transformedContext, userid,0);
-              login=false
+              setLogin(false);
             }
             
             /*Matomo configuration   (TESTING GA4)                  

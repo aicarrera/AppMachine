@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Card, CardBody, CardFooter, Divider, Heading, Image,Text, Stack, useToast, VStack, IconButton } from '@chakra-ui/react'
+import { Button, ButtonGroup, Card, CardBody, CardFooter, Divider, Heading, Image,Text, Stack, useToast, VStack, IconButton, Tooltip } from '@chakra-ui/react'
 
 //import useMatomo from '@jonkoops/matomo-tracker-react/lib/useMatomo';
 import { useEffect, useState } from 'react';
@@ -118,12 +118,16 @@ import * as constants from "../../config/constants";
           }}>
       {includeControls ?        
         <ButtonGroup variant='solid' spacing='3' alignItems={"flex-start"}>            
-        <Text fontSize='md'> Select:</Text>     
-          <Button id={'btn5yes_'+title} onClick={e=>handleSelect(e,title,2)} colorScheme='blue'>Yes</Button>
+        <Text fontSize='md'> Select:</Text>    
+        <Tooltip hasArrow label={'Si, voy a comprar un '+ spanish_translate} bg='green.300'> 
+          <Button id={'btn5yes_'+title} onClick={e=>handleSelect(e,title,2)} colorScheme='blue' >Yes</Button>
+        </Tooltip>
+        <Tooltip hasArrow label='No, prefiero preparar mi bebida' bg='red.600'> 
           <Button id={'btn5no_'+title} onClick={e=> handleSelect(e,title,1, false) } colorScheme='blue'>No</Button> 
+        </Tooltip>
         </ButtonGroup>             
     
-      : <Button id={'btn5'+title} onClick={e=>handle_nextStep(title,e)} colorScheme='blue'>Select</Button> }
+      : <Button id={'btn5'+title} onClick={e=>handle_nextStep(title,e)} colorScheme='blue'>Seleccionar</Button> }
   
       </CardFooter>
       </Card>

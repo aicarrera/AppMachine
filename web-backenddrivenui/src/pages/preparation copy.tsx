@@ -121,7 +121,7 @@ return (
     <h2>
       <AccordionButton onClick={()=>handleTriggerClick(contextFilter,["btn1drink"],"btn1drink")} >
         <HStack as="span" flex='1' textAlign='left'>
-        <Icon as={SiCoffeescript} /> <Text> Tu bebida seleccionada: {servicepreparation.service}</Text>   
+        <Icon as={SiCoffeescript} /> <Text> DRINK: {servicepreparation.service}</Text>   
         </HStack>
         <AccordionIcon />
       </AccordionButton>
@@ -134,7 +134,7 @@ return (
     </AccordionPanel>
   </AccordionItem>
 </Accordion>
-<Button id={'btn5ok'} onClick={e=>handlePreparation()} colorScheme='blue' alignSelf={"center"}>Finalizar compra</Button> 
+<Button id={'btn5ok'} onClick={e=>handlePreparation()} colorScheme='blue' alignSelf={"center"}>Select</Button> 
 </VStack>
 
 );
