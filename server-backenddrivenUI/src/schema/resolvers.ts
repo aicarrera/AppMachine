@@ -73,8 +73,8 @@ try {
 
  // insert a new record in the interactions table
  await client.query(
-   'INSERT INTO interactions (user_id, timestamp, epoch_time, element_id, related_data) VALUES ($1, $2, $3, $4, $5)',
-   [args.userId, new Date(), timestamp, args.elementId, args.relatedData]
+   'INSERT INTO interactions (user_id, timestamp, epoch_time, element_id, related_data, category) VALUES ($1, $2, $3, $4, $5, $6)',
+   [args.userId, new Date(), timestamp, args.elementId, args.relatedData, args.category]
  );
  return true;
  }

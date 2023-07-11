@@ -4,7 +4,7 @@ import {Icon, Tab, TabList, TabPanel, TabPanels, Tabs, VStack } from '@chakra-ui
 
 import { GiVendingMachine } from 'react-icons/gi'
 
-import { Heading,Text } from '@chakra-ui/react';
+import { Heading } from '@chakra-ui/react';
 
 import { useState } from "react";
 import {useTimeLabel} from "../functions/useTimeLabel";
@@ -19,7 +19,6 @@ import { Service } from "../config/interfaces";
 import Buy from "./buy";
 //import { useMatomo } from '@jonkoops/matomo-tracker-react'
 
-import ReactGA from 'react-ga4';
 import { trackevent } from "../functions/useTrackersGA4";
 import { getDayOfWeek } from "../functions/getDayOfWeek";
 

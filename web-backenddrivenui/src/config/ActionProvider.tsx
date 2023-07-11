@@ -3,11 +3,7 @@ import router from "next/router";
 import { trackevent } from '../functions/useTrackersGA4';
 import { gql } from '@apollo/client';
 
-const insertInteraction = gql`
- mutation insertInteractions($userId:String, $elementId:String, $relatedData:String){
-  insertInteractions(userId:$userId, elementId: $elementId, relatedData:$relatedData) 
-}
-`;
+
 
 const ActionProvider = ({ createChatBotMessage, setState, firstRecommended,chatService,client,userid, ...rest }) => {
 //  const [chatHistory, setChatHistory] = useState([{role:"system", content:"Act as a smart coffee machine. DO NOT PROVIDE EXPLANATIONS. If user message is asking a coffee, drink or beverage or if the user wants a coffee recommendation"},
@@ -72,9 +68,10 @@ const ActionProvider = ({ createChatBotMessage, setState, firstRecommended,chatS
 
   };
   const handleYes = async () => {
-    trackevent("btnYes","chatbot",JSON.stringify({}),userid,0); 
     const response = await chatService.sendMessageToAPI("Si, gracias");
     chatService.setChatHistory({role: "assistant", content: response})
+    trackevent("btnYes","chatbot",JSON.stringify(chatService.getChatHistory),userid,0); 
+
     console.log(chatService.getChatHistory)
     setState((prevState) => ({
       ...prevState,
@@ -87,23 +84,11 @@ const ActionProvider = ({ createChatBotMessage, setState, firstRecommended,chatS
     addMessageToState(response);
   };
 
-  const handleFinish = async () => {
-    trackevent("btnFinish", "chatbot","", userid,0);
-    console.log(chatService.getChatHistory.toString());
+  const handleFinish = async () => { 
   
     try {
-      const { loading, error, data } = await client.mutate({
-        mutation: insertInteraction,
-        variables: {
-          userId: userid,
-          elementId: "btnFinish",
-          relatedData: JSON.stringify(chatService.getChatHistory),
-        },
-      });
-  
-      if (loading) console.log("loading");
-      if (error) console.log(JSON.stringify(error, null, 2));
-  
+      trackevent("btnFinish", "chatbot",JSON.stringify(chatService.getChatHistory), userid,0);
+      console.log(chatService.getChatHistory.toString());
       router.push({
         pathname: "/",
       });
@@ -113,9 +98,10 @@ const ActionProvider = ({ createChatBotMessage, setState, firstRecommended,chatS
   };
   
   const handleNo = async () => {
-    trackevent("btnNo","chatbot",JSON.stringify({}),userid,0); 
     const response = await chatService.sendMessageToAPI("No, muestrame opciones");
     chatService.setChatHistory({role: "assistant", content: response})  
+    trackevent("btnNo","chatbot",JSON.stringify(chatService.getChatHistory),userid,0); 
+
     setState((prevState) => ({
       ...prevState,
       messages: [

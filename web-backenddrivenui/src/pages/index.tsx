@@ -8,7 +8,6 @@ import * as constants from "../config/constants";
 import { Login } from '../config/interfaces';
 import ReactGA from 'react-ga4';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
-import { trackevent } from '../functions/useTrackersGA4';
 /*async function login(username: String): Promise<Login> {
   try {
     const res = await fetch(constants._API_URL + 'getUser?username=' + username, {
@@ -77,6 +76,29 @@ const Index = () =>{
     }    
   };
 
+  const handleChatbot =  async () => {  
+    const jsonResponse = await login(username);
+    if(!jsonResponse){
+      setUserInput("");
+    }
+    else{
+      const userid = jsonResponse.id;
+      const role = jsonResponse.role;
+      var on = true
+      if (username in constants.ab_Testing){
+         on= constants.ab_Testing[username]
+      }
+      ReactGA.initialize([{trackingId:trackingID, gaOptions:{userId:userid}}]);
+      ReactGA.send({ hitType: "pageview", page: "/index" , value: username});
+
+      router.push({
+        pathname: "/coffeeChatbot",
+        query: { userid, role ,on}
+      });
+      setIsLoading(true);
+    }    
+  };
+
   return (
   
     <Flex h="100vh" w= "full" py={20} justifyContent="center">
@@ -85,7 +107,10 @@ const Index = () =>{
       Coffee Machine <Icon as={GiVendingMachine} />
     </Heading>
     <InputField label="User ID" id="userId" placeholder="Enter your email" value={username} onChange={e => setUserInput(e.target.value)}></InputField>
-    <Button w="full" onClick={handleLogin} isLoading={isLoading}>Login</Button>
+    <Button w="full" onClick={handleLogin} isLoading={isLoading}>Login Sistema</Button>
+    <Button w="full" onClick={handleChatbot} isLoading={isLoading}>Chatbot</Button>
+
+
     {isLoading && (
         <Spinner
           size="xl"

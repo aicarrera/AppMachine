@@ -67,7 +67,7 @@ type Query {
   getUserById(userid:String):User!
 }
 type Mutation{
-  insertInteractions(userId:String, elementId:String, relatedData:String):Boolean
+  insertInteractions(userId:String, elementId:String, relatedData:String, category:String):Boolean
   registerUser(userid:String, username:String, role:String): User!
 }
 `
