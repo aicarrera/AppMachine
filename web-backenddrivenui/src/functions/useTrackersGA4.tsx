@@ -3,8 +3,8 @@ import { gql } from '@apollo/client';
 import { client } from '../pages/main';
 
 const insertInteraction = gql`
- mutation insertInteractions($userId:String, $elementId:String, $relatedData:String){
-  insertInteractions(userId:$userId, elementId: $elementId, relatedData:$relatedData) 
+ mutation insertInteractions($userId:String, $elementId:String, $relatedData:String, $category:String){
+  insertInteractions(userId:$userId, elementId: $elementId, relatedData:$relatedData, category:$category) 
 }
 `;
 export const trackevent =  async (elementid: string, category: string, label: string, userid:string, value: number = 1) =>{
@@ -16,6 +16,7 @@ export const trackevent =  async (elementid: string, category: string, label: st
         userId: ""+userid,
         elementId: elementid.toLowerCase() + "_click",
         relatedData: label,
+        category:category
       },
       mutation: insertInteraction,
     });

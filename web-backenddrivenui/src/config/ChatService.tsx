@@ -19,7 +19,10 @@ set setDrinks(drinks:any[]){
  get getChatHistory(): ChatHistory[] {
     return this.chatHistory;
   }
-
+ // Method to return chat history with roles different than "system"
+ get getChatHistoryWithDifferentRole(): ChatHistory[] {
+  return this.chatHistory.filter((message) => message.role !== "system");
+}
 // Setter
 public setChatHistory(value: ChatHistory) {
     this.chatHistory =  [...this.chatHistory, value];

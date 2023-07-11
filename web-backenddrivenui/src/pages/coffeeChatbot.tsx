@@ -12,6 +12,7 @@ import * as constants from "../config/constants";
 import { Heading, Icon, Spinner, VStack } from "@chakra-ui/react";
 import { GiVendingMachine } from "react-icons/gi";
 import ChatService from "../config/ChatService";
+import { trackevent } from "../functions/useTrackersGA4";
 
 const client = new ApolloClient({
   uri: constants.GRAPHQL,
@@ -117,12 +118,21 @@ export async function getServerSideProps(context) {
 
 
  function coffeeChatbot({recommended, userid, role, contextFilter,firstRecommended,drinks}) {
+  const [isNewLogin, setLogin] = useState(true);
 
   console.log("drinks",drinks)
   //Starting chat service
   const chatService = new ChatService(drinks);
 
   const [firstResponse, setfirstResponse] = useState("-"); 
+  var valuesList = contextFilter.map(obj => obj.value);
+  var transformedContext = valuesList.join(", ");
+
+  if (isNewLogin){
+    trackevent("login", "chatbot",transformedContext, userid,0);
+    setLogin(false);
+  }
+  
 
   useEffect(() => {
     const fetchData = async () => {

@@ -49,7 +49,7 @@ const ActionProvider = ({ createChatBotMessage, setState, firstRecommended,chatS
         ...prevState,
         messages: [
           ...prevState.messages,
-          createChatBotMessage(response,   {
+          createChatBotMessage(response.replace("$",""),   {
             widget: "endInteraction",
           })
         ]
@@ -72,12 +72,15 @@ const ActionProvider = ({ createChatBotMessage, setState, firstRecommended,chatS
     chatService.setChatHistory({role: "assistant", content: response})
     trackevent("btnYes","chatbot",JSON.stringify(chatService.getChatHistory),userid,0); 
 
-    console.log(chatService.getChatHistory)
+  //  console.log(chatService.getChatHistory)
     setState((prevState) => ({
       ...prevState,
       messages: [
         ...prevState.messages,
-        createChatBotMessage(response)
+        createChatBotMessage(response,   {
+          widget: "endInteraction",
+        })
+
       ]
     }));
 
@@ -87,8 +90,8 @@ const ActionProvider = ({ createChatBotMessage, setState, firstRecommended,chatS
   const handleFinish = async () => { 
   
     try {
-      trackevent("btnFinish", "chatbot",JSON.stringify(chatService.getChatHistory), userid,0);
-      console.log(chatService.getChatHistory.toString());
+      trackevent("btnFinish", "chatbot",JSON.stringify(chatService.getChatHistoryWithDifferentRole), userid,0);
+    //  console.log(chatService.getChatHistory.toString());
       router.push({
         pathname: "/",
       });
