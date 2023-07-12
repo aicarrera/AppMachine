@@ -32,8 +32,8 @@ constructor(drinks) {
     this.drinks = drinks; // Initialize drinks attribute here
     this.chatHistory = [
         {role:"system", content:"Act as a smart coffee machine. TO PREPARE A BEVERAGE YOU NEED TYPE OF DRINK AND SUGAR LEVEL. DO NOT PROVIDE EXPLANATIONS. If user message is asking a coffee, drink or beverage or if the user wants a coffee recommendation"},
-        {role:"system", content:"Then only using the options in this JSON list:"+JSON.stringify(drinks.slice(0,2)) +"that has the drinks with the sugar level that the user likes.  Select the first one to recommend or serve and provide with the correct amount of sugar. Give a good reason under 20 words in Spanish. "},
-        { role: "system", content: "If the user is unsatisfied with the recommendation, present an alternative from this JSON list: " + JSON.stringify(drinks) + " in natural language. If the user expresses satisfaction, repeat the order (beverage and sugar level) and bid a farewell in under 10 words with symbol. Farewell should include $ at the end." }  ]    
+        {role:"system", content:"Then only using the options in this JSON list:"+JSON.stringify(drinks.slice(0,2)) +"that has the drinks with the suggested sugar level that the user likes.  Select the first one to recommend or serve and provide with the suggested amount of sugar. Give a good reason under 20 words in Spanish. "},
+        { role: "system", content: "If the user is unsatisfied with the recommendation, present an alternative from this JSON list: " + JSON.stringify(drinks) + " in natural language. If the user expresses satisfaction, repeat the order (beverage and sugar level) and bid a farewell in under 10 words. Farewell should include $ at the end." }  ]    
 }
 
   public sendMessageToAPI = async (message: string): Promise<string> => {

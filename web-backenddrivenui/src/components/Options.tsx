@@ -3,21 +3,21 @@ import { useState } from "react";
 
 const Options = (props) => {
   const [isLoading, setIsLoading] = useState(false); // State to track loading status
-
+  const [performed, setPerformed] = useState(false); // State to track loading status
   const handleOptionClick = (handler) => {
     setIsLoading(true); // Set isLoading to true when a button is clicked
 
     // Execute the provided handler function
     handler();
-
+    setPerformed(true)
     // Assuming the operation is asynchronous, use setTimeout as an example
     setTimeout(() => {
       setIsLoading(false); // Set isLoading back to false after the operation is completed
-    }, 2000);
+    }, 3000);
   };
     return (
       <div className="options">      
-      <ButtonGroup variant="outline" spacing="6">
+      <ButtonGroup variant="outline" spacing="6" isDisabled={performed}>
           {props.options.map((option) => {
             return (
               <Button

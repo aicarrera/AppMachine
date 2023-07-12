@@ -40,35 +40,41 @@ const ActionProvider = ({ createChatBotMessage, setState, firstRecommended,chatS
 */
   
   const handleNewUserMessage = async (newMessage) => {
-    const response = await chatService.sendMessageToAPI(newMessage);
-    //chatService.setChatHistory([...chatHistory, { role: "assistant", content: response }]);
-    chatService.setChatHistory({role: "assistant", content: response})
-    console.log(chatService.getChatHistory)
-    if (response.includes("$")){
-      setState((prevState) => ({
-        ...prevState,
-        messages: [
-          ...prevState.messages,
-          createChatBotMessage(response.replace("$",""),   {
-            widget: "endInteraction",
-          })
-        ]
-      }));
-    }
-    else{
-      setState((prevState) => ({
-        ...prevState,
-        messages: [
-          ...prevState.messages,
-          createChatBotMessage(response)
-        ]
-      }));
-    }
-
+    try {
+      var response = ""
+      response= await chatService.sendMessageToAPI(newMessage); 
+      chatService.setChatHistory({role: "assistant", content: response})  
+      if (response.includes("$")){
+        setState((prevState) => ({
+          ...prevState,
+          messages: [
+            ...prevState.messages,
+            createChatBotMessage(response, {
+              widget: "endInteraction", loading:true, delay:100 })
+          ]
+        }));
+      }
+      else{
+        setState((prevState) => ({
+          ...prevState,
+          messages: [
+            ...prevState.messages,
+            createChatBotMessage(response, {loading:true, delay:100})
+          ]
+        }));
+      }
+      trackevent("handleNewUserMessage", "chatbot",JSON.stringify(chatService.getChatHistoryWithDifferentRole), userid,0);
+      
+  }
+  catch (error) {
+    console.error("Error executing handleNewUserMessage:", error);
+  }
 
   };
   const handleYes = async () => {
-    const response = await chatService.sendMessageToAPI("Si, gracias");
+    try {
+    var response = "";
+    response= await chatService.sendMessageToAPI("Si, gracias");
     chatService.setChatHistory({role: "assistant", content: response})
     trackevent("btnYes","chatbot",JSON.stringify(chatService.getChatHistory),userid,0); 
 
@@ -77,7 +83,7 @@ const ActionProvider = ({ createChatBotMessage, setState, firstRecommended,chatS
       ...prevState,
       messages: [
         ...prevState.messages,
-        createChatBotMessage(response,   {
+        createChatBotMessage(response,   {delay:100, loading:true,
           widget: "endInteraction",
         })
 
@@ -85,6 +91,10 @@ const ActionProvider = ({ createChatBotMessage, setState, firstRecommended,chatS
     }));
 
     addMessageToState(response);
+  }
+  catch (error) {
+    console.error("Error executing handleYes:", error);
+  }
   };
 
   const handleFinish = async () => { 
@@ -96,12 +106,13 @@ const ActionProvider = ({ createChatBotMessage, setState, firstRecommended,chatS
         pathname: "/",
       });
     } catch (error) {
-      console.error("Error executing mutation:", error);
+      console.error("Error executing handleFinish:", error);
     }
   };
   
   const handleNo = async () => {
-    const response = await chatService.sendMessageToAPI("No, muestrame opciones");
+    var response = "";
+    response = await chatService.sendMessageToAPI("No, muestrame opciones");
     chatService.setChatHistory({role: "assistant", content: response})  
     trackevent("btnNo","chatbot",JSON.stringify(chatService.getChatHistory),userid,0); 
 
@@ -109,7 +120,7 @@ const ActionProvider = ({ createChatBotMessage, setState, firstRecommended,chatS
       ...prevState,
       messages: [
         ...prevState.messages,
-        createChatBotMessage(response)
+        createChatBotMessage(response, {delay:100, loading:true})
       ]
     }));
 

@@ -193,7 +193,7 @@ useEffect(() => {
           <Chatbot
             config={{
               ...config,
-              initialMessages: [createChatBotMessage(`Hola! Soy Cofi, tu barista. ${firstResponse}`, { widget: 'approveFirstOption' })],
+              initialMessages: [createChatBotMessage(`Hola! Soy Cofi, tu barista. ${firstResponse}`, { widget: 'approveFirstOption', delay:0, loading:true })],
             }}
             messageParser={MessageParser}
             actionProvider={(props) => (
