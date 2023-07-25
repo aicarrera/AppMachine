@@ -1,4 +1,4 @@
-import {calculateRatings, getSubservicesRecommendation, Subservice } from './ontologyAPI';
+import {getSubservicesRecommendation, Subservice } from './ontologyAPI';
 const { Client } = require('pg');
 const host='postgresdb' //localhost
 const connection = 'postgres://postgres:postgres@'+host+':5432/interactions'
