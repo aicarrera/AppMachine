@@ -109,7 +109,7 @@ function getBasicCard(s:Subservice) {
    console.log(args.userid);
    console.log(args.topk);
    console.log(args.contextFilter);
-   await calculateRatings(args.contextFilter);
+  // await calculateRatings(args.contextFilter);
    return (await getSubservicesRecommendation(args.userid, args.topk, args.on)).map(x=>getBasicCard(x));  
   }
   
