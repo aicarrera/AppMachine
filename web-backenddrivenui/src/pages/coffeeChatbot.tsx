@@ -13,6 +13,7 @@ import { Heading, Icon, Spinner, VStack } from "@chakra-ui/react";
 import { GiVendingMachine } from "react-icons/gi";
 import ChatService from "../config/ChatService";
 import { trackevent } from "../functions/useTrackersGA4";
+import { translationDictionary } from "../config/constants";
 
 const client = new ApolloClient({
   uri: constants.GRAPHQL,
@@ -133,7 +134,7 @@ export async function getServerSideProps(context) {
     setLogin(false);
   }
   
-
+/*
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -151,6 +152,38 @@ export async function getServerSideProps(context) {
 
     fetchData()
   },drinks);
+*/
+useEffect(() => {
+chatService.setDrinks=drinks
+const getRandomIndex = (max) => Math.floor(Math.random() * max);
+const randomDrinkIndex = getRandomIndex(3); // Select from the first 3 drinks
+const randomDrink = drinks[randomDrinkIndex];
+
+// Obtén la traducción y descripción de la bebida seleccionada
+  // Verificar si la bebida seleccionada existe en el diccionario de traducciones
+  const translatedDrink = translationDictionary[randomDrink.drink]
+    ? translationDictionary[randomDrink.drink].value
+    : translationDictionary[drinks[0].drink].value;
+  
+  const description = translationDictionary[randomDrink.drink]
+    ? translationDictionary[randomDrink.drink].description
+    : translationDictionary[drinks[0].drink].description;
+
+// Frases de recomendación
+const recommendPhrases = [
+  `Te recomiendo probar ${translatedDrink} con ${randomDrink.sugar === 0 ? '0' : randomDrink.sugar} azúcar. ${description}`,
+  `¡Anímate a disfrutar un ${translatedDrink}! Perfecto con ${randomDrink.sugar === 0 ? '0' : randomDrink.sugar} azúcar. ${description}`,
+  `Un sorbo de ${translatedDrink} te espera. Opta por ${randomDrink.sugar === 0 ? '0' : randomDrink.sugar} azúcar para resaltar su sabor. ${description}`,
+];
+
+
+
+const randomPhraseIndex = getRandomIndex(recommendPhrases.length);
+const randomPhrase = recommendPhrases[randomPhraseIndex];
+setfirstResponse(randomPhrase)
+chatService.setChatHistory({role: "user", content: "dame una recomendación para mi por favor con la cantidad adecuada de azucar"})
+chatService.setChatHistory({role: "assistant", content: randomPhrase})
+},drinks);
 
   //Initial Message
   

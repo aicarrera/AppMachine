@@ -37,6 +37,7 @@ constructor(drinks) {
 }
 
   public sendMessageToAPI = async (message: string): Promise<string> => {
+    try{
     const response = await axios.post(
       "https://api.openai.com/v1/chat/completions",
       {
@@ -58,6 +59,10 @@ constructor(drinks) {
     const updatedChatHistory = [...this.chatHistory, {role: "user", content: message}];
     this.chatHistory = updatedChatHistory;
     return botMessage;
+    }
+    catch{
+      return "¡Ups! ¿Puedes repetir eso? Creo que me perdí el último mensaje. Nuestra cafetera está recibiendo muchos pedidos!. \u2615"
+    }
   };
 }
 

@@ -99,4 +99,4 @@ export const translationDictionary = {
 
 
 
-export const OPENAI_KEY="k"
+export const OPENAI_KEY=""
