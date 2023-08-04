@@ -99,5 +99,5 @@ export const translationDictionary = {
 
 
 
-export const OPENAI_KEY=""//"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"
+export const OPENAI_KEY=""
 
