@@ -129,7 +129,7 @@ export async function getServerSideProps(context) {
   var valuesList = contextFilter.map(obj => obj.value);
   var transformedContext = valuesList.join(", ");
 
-  if (isNewLogin){
+  if (firstResponse === "-" || drinks.length==0){
     trackevent("login", "chatbot",transformedContext, userid,0);
     setLogin(false);
   }
