@@ -129,10 +129,10 @@ export async function getServerSideProps(context) {
   var valuesList = contextFilter.map(obj => obj.value);
   var transformedContext = valuesList.join(", ");
 
-  if (firstResponse === "-" || drinks.length==0){
+  /*if (firstResponse === "-" || drinks.length==0){
     trackevent("login", "chatbot",transformedContext, userid,0);
     setLogin(false);
-  }
+  }*/
   
 /*
   useEffect(() => {
@@ -183,16 +183,18 @@ const randomPhrase = recommendPhrases[randomPhraseIndex];
 setfirstResponse(randomPhrase)
 chatService.setChatHistory({role: "user", content: "dame una recomendación para mi por favor con la cantidad adecuada de azucar"})
 chatService.setChatHistory({role: "assistant", content: randomPhrase})
+trackevent("login", "chatbot",transformedContext, userid,0);
+
 },drinks);
 
   //Initial Message
-  
+/*  
 useEffect(() => {
   console.log("First",firstResponse)
   if(firstResponse!="-" && drinks.length>0){
   chatService.setChatHistory({role: "assistant", content: firstResponse})  
   }
-}, [firstResponse]);
+}, [firstResponse]);*/
 
   var shift = useTimeLabel();    
   return (
