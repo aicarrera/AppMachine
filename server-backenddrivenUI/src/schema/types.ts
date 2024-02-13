@@ -1,73 +1,128 @@
 import { gql } from "apollo-server-express";
 
-
 export default gql`
-interface ICard {
-  component:  String!
-  data: ICardData
-}
-interface ICardData {
-  id: String!
-  title: String!
+    
+    interface IUIElement {
+        idElement:  String!
+        label: String!
+        type: String!
+        serviceInformation: [Information]
+    }
+    type Label implements IUIElement{
+        idElement:  String!
+        label: String!
+        type: String!
+        serviceInformation: [Information]
+    }
+    interface IUIComplexElement implements IUIElement{
+        idElement:  String!
+        label: String!
+        type: String!
+        options: [Option]
+        isSubserviceHolder: Boolean
+        serviceInformation: [Information]   
+        groupRecommended: Boolean 
+        # Fields specific to complex elements like ComboBox
+    }
+    type CheckboxDropdownList implements IUIElement & IUIComplexElement  {
+        idElement: String!
+        label: String!
+        type: String!
+        isSubserviceHolder: Boolean
+        options: [Option]
+        serviceInformation: [Information]
+        groupRecommended: Boolean 
+        selectedOptions: [Option]
+       
 
-}
-type GridItem {
-  thumbnailUrl: String!
-  subTitle: String!
-}
+        }
+    type DropdownList implements IUIElement & IUIComplexElement{
+        idElement: String!
+        label: String!
+        type: String!
+        options: [Option]
+        isSubserviceHolder: Boolean
+        serviceInformation: [Information]
+        groupRecommended: Boolean 
+        selectedOption: Option
 
-type BasicCardData implements ICardData{
-  id: String!
-  title: String!
-  thumbnailUrl: String!
- 
+    }
+    type Option {
+        label:String!
+        value: String!
+        serviceInformation: [Information]
+    }
+    type Information{
+        property:String
+        value:String
+    }
 
-}
+    interface IUIContainer implements IUIElement{
+        idElement:  String!
+        label: String!
+        type: String!
+        serviceInformation: [Information]
+        #Fields specific to Container
+        childComponents: [IUIElement]!
+    }
+    
+    
 
-type BasicCard implements ICard{
-  component: String!
-  data: BasicCardData
-}
 
-type GridCardData implements ICardData{
-  id: String!
-  title: String!
-  grid: [GridItem]!
-  textLink: String!
-  linkUrl: String!
-}
+    interface ICard{
+    data: ICardData
+    }
 
-type GridCard implements ICard{
-  component: String!
-  data: GridCardData
-}
+    type Eservice{  
+    name: String!
+    subservices: [Esubservice]!
+    template: [UITemplate]! 
+    }
+    type Esubservice{  
+    name: String!
+    template: [UITemplate]
+    }
 
-type ActionCardData implements ICardData{
-  id: String!
-  title: String!
-  textLink: String!
-  linkUrl: String!
-}
+    type UITemplate{
+      idUserInterface: String!  
+      root: IUIContainer
+      sections: [UITemplateSection]!
+    }
+    type UITemplateSection{
+        idSection: String!
+        isSubserviceContainer: Boolean
+        rootSection: IUIContainer
+        uiElements: [IUIElement]!
+    }
+    type Stack implements IUIElement & IUIContainer{
+        idElement: String!
+        label: String!
+        type: String!
+        childComponents: [IUIElement]!
+        orientation: String!
+        serviceInformation:[Information]
+    }
+    interface ICardData {    
+        title: String!
 
-type ActionCard implements ICard{
-  component: String!
-  data: ActionCardData
-}
-input ContextFilter{
-  name:String
-  value:String
-}
-type User{  
-  userid:String!
-  username:String!
-  role:String!
-}
-type Query { 
-  recommendedForYouItems(userid:String, topk:Int, contextFilter:[ContextFilter], on:Boolean): [ICard!]!
-  getUserById(userid:String):User!
-}
-type Mutation{
-  insertInteractions(userId:String, elementId:String, relatedData:String, category:String):Boolean
-  registerUser(userid:String, username:String, role:String): User!
-}
-`
+    }
+    type BasicCardData implements ICardData{ 
+        title: String!
+        thumbnailUrl: String!
+        }
+
+
+   type BasicCard implements IUIElement & ICard{
+       idElement: String!
+       label: String!
+       type: String!    
+       direction: String!  
+       data: BasicCardData
+       serviceInformation:[Information]
+    }
+    type Query { 
+        recommendedUI(idUserInterface:String, recommendedServices:String): UITemplate!
+       
+    }
+    
+    `
